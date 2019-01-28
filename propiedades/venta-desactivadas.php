@@ -1,0 +1,294 @@
+<?php
+require('../includes/config2.php');
+
+
+if(!$user->is_logged_in()){
+ header('Location: ../login'); exit();
+  }
+/*$data = date('Y-m-d');;
+$hora =  date('H:i:s');
+$IPPROXY = $_SERVER['REMOTE_ADDR'];
+$IP = getIP();
+$Nav = $_SERVER['HTTP_USER_AGENT'];
+$accio="Login";
+$observacions="Conectado";
+$loging = "INSERT INTO logs (data, hora, usuari, ip_conexio, ip_proxy, navegador, accio, observacions) VALUES ('".$data."','".$hora."','".$_SESSION['username']."','".$IPPROXY."', '".$IP."', '".$Nav."','".$accio."','".$observacions."')";*/
+//$db->exec($loging);
+$title = 'Villas Planet Inmobiliaria - XCONTROLPRO';
+$activo="propiedades";
+$activo2="";
+require('../layout/header.php');
+?>
+<?php
+include('../layout/menu-venta.php');
+?>
+
+<div class="container-fluid">
+
+<!-----------------------------------------------------------------TABS-->
+	<div style="margin-top: 0px;">
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" ><a style='color: black;' href="venta.php" >Activadas</a></li>
+		    <li role="presentation" ><a style='color: black;' href="venta-todas.php" >Todas</a></li>
+		    <li role="presentation" class="active" ><a style='color: black;' href="#desactivadas" aria-controls="desactivadas" role="tab" data-toggle="tab">Desactivadas</a></li>
+
+		    <a href="<?php echo DIR;?>propiedades/propiedad" style='margin-left: 50px;'>
+				<button  class="uk-button button-direct " style="background-color:#F9B233;color:#fff"><span uk-icon="icon:plus;"></span> Añadir propiedad</button></a> &nbsp;&nbsp; <b>Estás en: Ventas > Propiedades desactivadas</b>
+
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+
+
+
+
+
+
+
+<!--------------------------------------------------------CASAS DESACTIVADAS---------------->
+		    <div role="tabpanel" class="tab-pane active" id="desactivadas">
+
+
+	<div class="row" style="margin-top: 0px; background-color: white;">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  style="margin-top: 30px;">
+			 <table id="example3" class="table table-hover bulk_action dt-responsive nowrap " cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+
+                                    <th>Publicado</th>
+                                    <th>Referencia</th>
+                                    <th>Titulo / Nombre</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                          <!--CONSULTAS SQL PARA EL CUERPO DE LA TABLA-->
+<?php
+$stmt = $db->prepare("SELECT properties.yourRef,properties.propNameES,properties.ID,properties.active,properties.propType,properties.propLocation,properties.propTown,properties.propNameES,properties.propPrice FROM properties WHERE properties.active = 0  ORDER BY yourRef desc limit 1200 ");
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+$stmt->execute();
+$i=1;
+while ($row = $stmt->fetch())
+{// WHILE 1
+$ref=$row['yourRef'];
+$tipo = explode('|',$row['propType']);
+$localizaciones = explode(':',$row['propLocation']);
+$town=$row['propTown'];
+$title2 = limpia($row['propNameES']);
+$location=$localizaciones;
+if (($location=="0") or ($location=" ")) {
+	$location=strtolower($localizaciones[0]);
+} else {
+	$location=$location;
+
+}
+
+$location=ucwords($location);
+
+$titulo_prop=strtolower($row['propNameES']);
+
+if ($location=="0") {
+	$location="<span style='font-style:italic'>-No asignado-</span>";
+}
+
+$precio = number_format((float)$row['propPrice'], 0, ',', '.');
+
+if ($precio!="0") {
+	$precio=$precio."€";
+} else {
+	$precio="<i>-No asignado-</i>";
+}
+ ?>
+
+<tr style="background-color: #ffb3b3;">
+
+
+
+
+										<td>
+											<center>
+												<?php if ($row['active']=='1'): ?>
+
+														<a onclick="estado('<?php echo $row['ID']?>','<?php echo $row['active']?>')"><span uk-icon="icon:check;ratio: 1" class="green"></a></span>
+
+													<?php else: ?>
+
+														<a onclick="estado('<?php echo $row['ID']?>','<?php echo $row['active']?>')"><span uk-icon="icon:close;ratio: 1" class="red"></a></span>
+
+												<?php endif ?>
+											</center>
+										</td>
+										<td><a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" ><span style="font-weight:600"><?php echo $row['yourRef']?></span></a></td>
+
+										<td><a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" class="uk-text-truncate"><?php echo $row['propNameES']?></a></td>
+
+
+										<td>
+											<div class="uk-grid uk-grid-small">
+
+													<a style='color: black;' href="<?php echo DIR;?>propiedades/editar?yourRef=<?php echo trim($row['yourRef'])?>"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>
+
+
+
+
+
+													<a style='color: black;' onclick="deletedata(<?php echo $row['ID']?>)"><span uk-icon="icon:trash;ratio:1" uk-tooltip="Eliminar"></span></a>
+											</div>
+										</td>
+</tr>
+<!--CUERPO DE LA PAGINA-->
+<?php
+$i++;
+}// WHILE 1
+?>
+                            </tbody>
+                        </table>
+		</div>
+	</div>
+
+
+
+		    </div>
+<!--------------------------------------------------------CASAS DESACTIVADAS---------------->
+
+		  </div>
+	</div>
+<!-----------------------------------------------------------------TABS-->
+
+
+</div>
+
+<div id="preview-modal"></div>
+
+<?php
+//include header template
+require('modal_clientes.php');
+require('../layout/footer.php');
+
+?>
+
+<script type="text/javascript">
+function previewModal(param,divid) {
+		         $.ajax({
+			type: "POST",
+			url: "<?php echo DIR;?>propiedades/preview",
+			data:{ ref: param, divid: divid },
+					 beforeSend: function(){
+		   $(".loader").show();
+		  },
+			success: function(data){
+				$(".loader").fadeOut("slow");
+				$("#preview-modal").html(data);
+
+
+			}
+			});
+        }
+function previewGallery(param,divid) {
+         $.ajax({
+	type: "POST",
+	url: "<?php echo DIR;?>propiedades/previewgallery",
+	data:{ refid: param, divid: divid },
+			 beforeSend: function(){
+   $(".loader").show();
+  },
+	success: function(data){
+		$(".loader").fadeOut("slow");
+		UIkit.modal("#previewgallery").show();
+		$("#previewgallery").html(data);
+		$("select.select-gallery")[0].sumo.reload();
+
+	}
+	});
+        }
+
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+          $('.search-box').SumoSelect({search: true, searchText: 'Escribir aquí...',selectAll:true,noMatch: 'No hay resultados para "{0}"',captionFormat:'{0} Seleccionados',
+    captionFormatAllSelected:'{0} todos seleccionados',locale: ['OK', 'Cancelar', 'Seleccionar todo']});
+			$('.select-gallery').SumoSelect({search: true, searchText: 'Escribir aquí...',selectAll:false,noMatch: 'No hay resultados para "{0}"',captionFormat:'{0} Seleccionados',
+    captionFormatAllSelected:'{0} todos seleccionados',locale: ['OK', 'Cancelar', 'Seleccionar todo']});
+			$('.simple').SumoSelect();
+        });
+	$(document).ready(function() {
+	var s = $(".filters");
+	var pos = s.position();
+	$(window).scroll(function() {
+		var windowpos = $(window).scrollTop();
+		if (windowpos >= pos.top & windowpos >170) {
+			s.addClass("stickbottom");
+			s.addClass("uk-animation-slide-bottom-small");
+			s.removelass("uk-animation-slide-top-small");
+		} else {
+			s.removeClass("stickbottom");
+			s.removeClass("uk-animation-slide-bottom-small");
+			s.addClass("uk-animation-slide-top-small");
+		}
+	});
+});
+
+
+ UIkit.upload('.js-upload');
+
+
+
+	function deletedata($id) {
+	var id = $id;
+	UIkit.modal.confirm('¿Confirma que desea eliminar la venta?', { center:true, labels: { ok: 'Ok', cancel: 'Volver a Ventas' } }).then(function() {
+
+			$.ajax({
+                url: '<?php echo DIR;?>propiedades/deleteventa?idventa=' + id, // url where to submit the request
+                success : function(result) {
+                   location.reload();
+
+                },
+                error: function(xhr, resp, text,error) {
+                     UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> <strong>Ha habido un error al eliminar. Inténtelo de nuevo.</strong>', status: 'danger', timeout:2000})
+					alert(error);
+                }
+
+			});
+}, function () {
+
+});
+
+}
+
+function estado($id,$active)
+{
+	var id = $id;
+	var active = Number($active);
+	if (active==1) {
+		var activacion = 0;
+	}else{
+		var activacion = 1;
+	}
+
+	  $.ajax({
+		    type: "GET",
+            cache: false,
+			url: "<?php echo DIR;?>propiedades/activar?idventa=" + id + "&active=" + activacion,
+				beforeSend: function(){
+		  				 $(".loader").show();
+		 		 },
+			success: function(data){
+				location.reload();
+				$(".loader").fadeOut("slow");
+
+			}
+			});
+}
+
+
+
+    </script>
+
+<!--JAVASCRIPT PARA EL MODAL-->
+
+
+
+</body>
+</html>

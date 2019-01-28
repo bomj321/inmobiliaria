@@ -1,0 +1,155 @@
+<style>
+/*
+* Custom code to make submenus is Bootstrap 3
+* http://bootsnipp.com/snippets/6N5B
+*/
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+<!----------------------------------------------------------MENU NUEVO-->
+        <nav class="navbar navbar-default" style="height: 70px; background-color: white; position: relative; z-index: 3; padding-top: 5px;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a  class="navbar-brand" href="<?php echo DIR;?>principal"><img src="<?php echo DIR;?>images/villas-planet-logo.png" width="180"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background-color: white;">
+              <ul class="nav navbar-nav">        
+                <li class="dropdown" id='1' onmouseover="desplegar(1)" onmouseout="retraer(1)">
+                  <a href="<?php echo DIR;?>propiedades/" class="dropdown-toggle <?php if ($activo=='propiedades'){ echo 'yellow'; }?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Propiedades <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="<?php echo DIR;?>propiedades/venta"><span uk-icon="icon:grid; ratio:0.8"></span> <strong>Venta</strong></a></li>
+                      <li><a href="<?php echo DIR;?>propiedades/alquileres"><span uk-icon="icon:grid; ratio:0.8"></span> <strong>Alquileres</strong></a></li>
+                     
+                      <li><a href="<?php echo DIR;?>propiedades/propiedad"><span uk-icon="icon:plus; ratio:0.8"></span> Añadir propiedad</a></li>
+                      <li style="display:inline-block; width:100%; border-bottom:1px solid #ccc"></li>
+                      <li><a href="<?php echo DIR;?>zonas/"><span uk-icon="icon:location; ratio:0.8"></span> Gestionar zonas</a></li>                                     
+                      <li><a href="<?php echo DIR;?>zonas/zona?accion=nuevo"><span uk-icon="icon:plus; ratio:0.8"></span> Añadir zona</a></li>
+                      <li style="display:inline-block; width:100%; border-bottom:1px solid #ccc"></li>
+                      <li><a href="<?php echo DIR;?>extras/"><span uk-icon="icon:nut; ratio:0.8"></span> Gestionar extras/distancias</a></li> 
+                       <li><a href="<?php echo DIR;?>extras/alquileres"><span uk-icon="icon:nut; ratio:0.8"></span>Extras Alquileres</a></li>   
+                  </ul>
+                </li>
+
+                 <li class="dropdown" id='2' onmouseover="desplegar(2)" onmouseout="retraer(2)">
+                  <a href="<?php echo DIR;?>reservas/" class="dropdown-toggle <?php if ($activo=='reservas'){ echo 'yellow'; }?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservas <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo DIR;?>reservas/"><span uk-icon="icon:grid; ratio:0.8"></span> Gestionar reservas</a></li>
+                    <li><a href="<?php echo DIR;?>reservas/addreservas"><span uk-icon="icon:plus; ratio:0.8"></span> Nueva reserva</a></li>
+                  </ul>
+                </li>
+
+                 <li class="dropdown" id='3' onmouseover="desplegar(3)" onmouseout="retraer(3)">
+                  <a href="#" class="dropdown-toggle <?php if ($activo=='clientes'){ echo 'yellow'; }?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                       <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#"><span uk-icon="icon:users; ratio:0.8"></span>Gestionar clientes</a>
+                            <ul class="dropdown-menu">
+                              <li><a href="<?php echo DIR;?>clientes/">Clientes Venta</a></li>
+                              <li><a href="<?php echo DIR;?>clientes/alquiler">Clientes Alquiler</a></li>
+                              <li><a href="<?php echo DIR;?>clientes/otros">Clientes Otros</a></li>
+                            </ul>
+                    </li>
+                    <li><a href="<?php echo DIR;?>propietarios/"><span uk-icon="icon:users; ratio:0.8"></span> Gestionar propietarios</a></li>
+                    <li><a href="<?php echo DIR;?>clientes/addclientes"><span uk-icon="icon:plus; ratio:0.8"></span> Añadir cliente</a></li>   
+                  </ul>
+                </li>
+
+                  <li class="dropdown" id='4' onmouseover="desplegar(4)" onmouseout="retraer(4)">
+                  <a href="#" class="dropdown-toggle <?php if ($activo=='web'){ echo 'yellow'; }?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contenidos <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                     <li><a href=""><span uk-icon="icon:world; ratio:0.8"></span> Gestión contenido web</a></li>
+                     <li><a href="<?php echo DIR;?>contenidos/servicios"><span uk-icon="icon:cog; ratio:0.8"></span> Servicios Villas Planet</a></li>
+                     <li><a href=""><span uk-icon="icon:mail; ratio:0.8"></span> Información de contacto</a></li>
+                     <li><a href="<?php echo DIR;?>contenidos/informes"><span uk-icon="icon:mail; ratio:0.8"></span> Informes</a></li>
+                  </ul>
+                </li>
+
+                 <li class="dropdown"  id='5' onmouseover="desplegar(5)" onmouseout="retraer(5)">
+                  <a href="#" class="dropdown-toggle <?php if ($activo=='correo'){ echo 'yellow'; }?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Correo <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                     <li><a href=""><span uk-icon="icon:mail; ratio:0.8"></span> Bandeja de entrada</a></li>
+                     <li><a href=""><span uk-icon="icon:rss; ratio:0.8"></span> Newsletter/Notificaciones</a></li>
+                  </ul>
+                </li>
+
+                 <li class="dropdown"  id='6' onmouseover="desplegar(6)" onmouseout="retraer(6)">
+                  <a href="#" class="dropdown-toggle <?php if ($activo=='blog'){ echo 'yellow'; }?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                     <li><a href="<?php echo DIR;?>blog/"><span uk-icon="icon:world; ratio:0.8"></span> Gestión de noticias</a></li>
+                     <li><a href="<?php echo DIR;?>blog/post?accion=nuevo"><span uk-icon="icon:plus; ratio:0.8"></span> Nueva noticia</a></li>
+                     <li><a href="<?php echo DIR;?>blog/tags"><span uk-icon="icon:tag; ratio:0.8"></span> Gestión de etiquetas</a></li>   
+                  </ul>
+                </li>
+
+                <li class="<?php if ($activo=='clientes'){ echo 'yellow'; }?>"><a href="http://www.villasplanet.com/es"><span uk-icon="icon:world; ratio:0.95" class="icon-margin3"></span>Web<span class="sr-only">(current)</span></a></li>
+                 
+
+                 <li class="dropdown"  id='7' onmouseover="desplegar(7)" onmouseout="retraer(7)">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span uk-icon="icon:user; ratio:0.9" class="icon-margin"></span><strong><?=$_SESSION['username']?></strong> <span uk-icon="icon:chevron-down" class="icon-margin-top"></span></a>
+                  <ul class="dropdown-menu">
+                       <li><a href="#">Modificar empleado</a></li>
+                       <li><a href="#">Añadir empleado</a></li>
+                       <li><a href="logout">Cerrar sesión <span uk-icon="icon:sign-out"></span></a></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-search"></span>
+                        <input type="text" class="form-control " placeholder="Búsqueda rápida, Buscar REF, Prop...">
+                    </div>  
+                  
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+              </form>     
+            </div><!-- /.navbar-collapse -->
+        </nav>
+  </div>      
+</div>
+
+

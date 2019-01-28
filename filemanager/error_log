@@ -1,0 +1,4 @@
+[21-Jun-2017 11:24:09 Europe/Rome] PHP Warning:  scandir(../source/): failed to open dir: No such file or directory in /home/webstyle/public_html/webstylesec.com/demo/xarxa-nuevo/xarxa-privado/filemanager/dialog.php on line 544
+[21-Jun-2017 11:24:09 Europe/Rome] PHP Warning:  scandir(): (errno 2): No such file or directory in /home/webstyle/public_html/webstylesec.com/demo/xarxa-nuevo/xarxa-privado/filemanager/dialog.php on line 544
+[21-Jun-2017 11:24:09 Europe/Rome] PHP Warning:  Invalid argument supplied for foreach() in /home/webstyle/public_html/webstylesec.com/demo/xarxa-nuevo/xarxa-privado/filemanager/dialog.php on line 556
+[21-Jun-2017 11:24:09 Europe/Rome] PHP Warning:  Invalid argument supplied for foreach() in /home/webstyle/public_html/webstylesec.com/demo/xarxa-nuevo/xarxa-privado/filemanager/dialog.php on line 1105
