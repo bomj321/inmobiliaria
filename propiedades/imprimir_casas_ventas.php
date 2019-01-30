@@ -71,8 +71,8 @@ $cuenta_extras = $extras->rowCount();
 
 require_once ('condicional_informacion_casas.php');
 
-//$pdf = new PDF_AutoPrint('P', 'mm', 'A4');
-$pdf = new PDF;
+$pdf = new PDF_AutoPrint('P', 'mm', 'A4');
+//$pdf = new PDF;
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 15);
 
@@ -191,16 +191,23 @@ if ($cuenta_filas_distancias) {
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(244,187,63);
 $pdf->SetFillColor(0,0,0);
-$pdf->SetXY(120, 180);
-$pdf->Cell(60,5,utf8_decode('Extras'),0,0,'L',true);
+$pdf->SetXY(30, 190);
+$pdf->Cell(80,5,utf8_decode('Extras'),0,0,'L',true);
 
 $pdf->Ln(1);
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(0, 0, 0);
-if ($cuenta_filas_distancias) {
-        while ($distancias1 = $distancias->fetch()) {
+if ($cuenta_extras) {
+        while ($extras_row = $extras->fetch()) {
+        $subExtra = explode(',', $extras_row['extraCat']);
+        $subExtra2 = $subExtra[0];  
+        if ($subExtra2 != 'no' && $subExtra2 != ' ') {
+              $nombre_extra = ': '.$subExtra2;
+          }else{
+            $nombre_extra = '';
+          } 
         $pdf->SetX(30);
-        $pdf->Cell(80,15,utf8_decode($distancias1['distancia_nombre'].': '.$distancias1['extraDist']),0,0,'L');
+        $pdf->Cell(80,15,utf8_decode($extras_row['extraNombre'].$nombre_extra),0,0,'L');
         $pdf->Ln(5);   
     }
 
@@ -234,7 +241,7 @@ $pdf->MultiCell(151.2,2, utf8_decode('Esta publicación es propiedad intelectual
 /*CONDICIONES DE USO*/
 
 
-//$pdf->AutoPrint();
+$pdf->AutoPrint();
 $pdf->Output();
 mysqli_close($connection);
 ?>
