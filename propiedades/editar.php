@@ -48,11 +48,15 @@ include('../layout/menu.php');
  
 
 <div class="container" style="background-color: white; margin-top: 50px;">
-    <button onclick="saveData('1')" class="uk-button uk-button-primary flotante" type="button">
-    <strong>Editar y Publicar <span uk-icon="icon:push;ratio:0.95" class="icon-margin"></span></strong>
-</button>
+  
 
     <form id="property">
+
+          <button onclick="saveData('1')" class="uk-button uk-button-primary flotante" type="button">
+                     <strong>Editar y Publicar <span uk-icon="icon:push;ratio:0.95" class="icon-margin"></span></strong>    
+            </button>
+
+            
         <!--ID DE LA VENTA -->
         <input type="hidden" name="id_venta" value="<?php echo $row['ID']; ?>"><!--ID DE LA VENTA -->
         <div class="row">

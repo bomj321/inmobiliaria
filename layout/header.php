@@ -14,6 +14,11 @@
 <link href="<?php echo DIR;?>js/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo DIR;?>js/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
  <!-- Datatables -->
+<!--Jquery UI-->
+<link rel="stylesheet" href="<?php echo DIR;?>js/jquery-ui/jquery-ui.min.css" />
+<link rel="stylesheet" href="<?php echo DIR;?>js/jquery-ui/jquery-ui.structure.min.css" />
+<link rel="stylesheet" href="<?php echo DIR;?>js/jquery-ui/jquery-ui.theme.min.css" />
+<!--Jquery UI--> 
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
@@ -139,7 +144,7 @@
         display:scroll;
         position:fixed;
         bottom:50%;
-        right:5.5%;
+        right:-50;
         z-index: 9999;
         writing-mode: vertical-lr;
         transform: rotate(90deg);
@@ -153,7 +158,7 @@
     .flotante {
       max-width:45px;
       padding: 10px 10px 10px 10px;
-      right:15.5% !important;
+     margin-right: 10% !important;
     } 
   
   .flotante strong {

@@ -25,6 +25,7 @@
     <script src="<?php echo DIR;?>js/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="<?php echo DIR;?>js/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="<?php echo DIR;?>js/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="<?php echo DIR;?>js/jquery-ui/jquery-ui.min.js"></script>
 
 <script type="text/javascript">
 $(window).load(function() {

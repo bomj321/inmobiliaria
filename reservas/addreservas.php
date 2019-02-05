@@ -51,17 +51,17 @@ include('../layout/menu.php');
 			</div>
 			<div class="col-md-6 col-sm-6 col-xs-12">
 						<div class="form-group">
-						    <label for="id_propiedad">Propiedad</label>
+						    <label for="id_propiedad">Propiedades (Short)</label>
 						    <select class="form-control box-gallery-propiedad" id="id_propiedad" required="true" name="id_propiedad">
 						      <option value="">Seleccione</option>
 						      <?php 	
-						   $propiedades = $db->prepare("SELECT propTown,propType,propAddress,ID FROM rentals ORDER BY ID desc limit 5000");
+						   $propiedades = $db->prepare("SELECT propTown,yourRef,propNameES,ID FROM rentals WHERE rentalType = 'short' ORDER BY ID desc");
 						   $propiedades->setFetchMode(PDO::FETCH_ASSOC);
 								$propiedades->execute();
 						while ($propiedades_rows = $propiedades->fetch())
 						{
 							?>
-							   <option value="<?php echo $propiedades_rows['ID']?>">Tipo: <?php echo $propiedades_rows['propType']?>, Direcci&oacute;n: <?php echo $propiedades_rows['propAddress']?>, Lugar:  <?php echo $propiedades_rows['propTown']?></option>
+							   <option value="<?php echo $propiedades_rows['ID']?>">Ref: <?php echo $propiedades_rows['yourRef']?>, Nombre: <?php echo $propiedades_rows['propNameES']?></option>
 							<?php 
 							 }
 							 ?>		    
