@@ -1,0 +1,21 @@
+.nav-tabs a {
+	color: black;
+}
+
+		#reservas td {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+	#reservas_filter .input-sm
+	{
+	  width: 500px !important;
+	  height: 40px !important;
+	}
+
+	#reservas_filter label
+	{
+	  font-weight: bold;
+	}

@@ -140,11 +140,11 @@
                 </li>
               </ul>
 
-              <form class="navbar-form navbar-left">
+              <form class="navbar-form navbar-left" method="post" action="<?php echo DIR;?>busquedas/busqueda.php">
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon glyphicon glyphicon-search"></span>
-                        <input type="text" class="form-control " placeholder="Búsqueda rápida, Buscar REF, Prop...">
+                        <input type="text" class="form-control input-sm" placeholder="Búsqueda rápida, Buscar REF, Prop..." name="busqueda">
                     </div>  
                   
                 </div>
