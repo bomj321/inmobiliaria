@@ -1,6 +1,6 @@
 <div class="row" style="margin-top: 50px; background-color: white;">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  style="margin-top: 30px;">
-			 <table id="clientes_busqueda" class="table table-hover bulk_action dt-responsive nowrap table-striped" cellspacing="0" width="100%">
+			 <table id="propietarios_busqueda" class="table table-hover bulk_action dt-responsive nowrap table-striped" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                 	<th>ID</th>
@@ -18,7 +18,7 @@
 
 /*PRIMERO SE OBTIENE LA CANTIDAD DE COLUMNAS*/
 
-$query = $db->prepare('show columns from clients');
+$query = $db->prepare('show columns from owners');
 $query->setFetchMode(PDO::FETCH_ASSOC);
 
 $query->execute();
@@ -32,7 +32,7 @@ $i++;
 /*PRIMERO SE OBTIENE LA CANTIDAD DE COLUMNAS*/
 
 /*DESPUES DE OBTIENDE LA QUERY A AGREGAR AL SELECT*/
-$query_2 = $db->prepare('show columns from clients');
+$query_2 = $db->prepare('show columns from owners');
 $query_2->setFetchMode(PDO::FETCH_ASSOC);
 
 $query_2->execute();
@@ -66,7 +66,7 @@ if($i!=$a){
 
 
 
-$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition . " ORDER BY ID");
+$stmt = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID");
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 while ($row = $stmt->fetch()){// WHILE 1
@@ -79,7 +79,7 @@ while ($row = $stmt->fetch()){// WHILE 1
 						                </td>
 
 										<td>
-											<a style='color: black;' href="" class="green"><strong><?php echo $row['clientType']?></strong></a>
+											<a style='color: black;' href="" class="green"><strong><?php echo $row['propType']?></strong></a>
 										</td>
 
 										<td>
@@ -87,23 +87,23 @@ while ($row = $stmt->fetch()){// WHILE 1
 										</td>
 
 										<td onclick="datoscliente('<?php echo $row['ID']?>')" style="cursor:pointer;" data-toggle="modal" data-target="#cliente_modal">
-											<?php echo $row['clientName']?>
+											<?php echo $row['sellerName1']?>
 
 										</td>
 
 										<td>
-											<a style='color: black;' href="" > <?php echo $row['clientEmail']?> </a>
+											<a style='color: black;' href="" > <?php echo $row['sellerEmail']?> </a>
 										</td>
 
 										<td>
-											<?php echo $row['clientTel1']?>
+											<?php echo $row['sellerTel']?>
 
 										</td>
 
 										<td>
 												<!--<a style='color: black;'  onclick="previewModal('<?php //echo $row['ID']?>')" ><span uk-icon="icon:info;ratio:1" uk-tooltip="Previsualizar"></span></a>-->
 
-												<a style='color: black;' id='boton_clientes_editar' onclick="modalEditar(<?php echo $row['ID']?>)"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>												
+												<a style='color: black;' id='boton_propietarios_editar' onclick="modalEditarProp(<?php echo $row['ID']?>)"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>												
 										</td>
 
 </tr>

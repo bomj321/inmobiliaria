@@ -137,7 +137,7 @@ function deletedata($id) {
 	UIkit.modal.confirm('¿Confirma que desea eliminar el cliente?', { center:true, labels: { ok: 'Ok', cancel: 'Volver a clientes' } }).then(function() {
 
 			$.ajax({
-                url: '<?php echo DIR;?>clientes/deletecliente.php?idcliente=' + id, // url where to submit the request
+                url: '<?php echo DIR;?>clientes/deletecliente?idcliente=' + id, // url where to submit the request
                 success : function(result) {
                    location.reload();
 
@@ -162,7 +162,7 @@ function deletedata($id) {
 	function datoscliente($id_cliente){
         var id = $id_cliente;
         $.ajax({
-            url: "<?php echo DIR;?>clientes/respuesta_modal.php?idcliente=" + id,
+            url: "<?php echo DIR;?>clientes/respuesta_modal?idcliente=" + id,
             type:"GET",
 	          beforeSend: function(){
 			  		$("#cliente_modal .modal-body").html(
@@ -184,7 +184,7 @@ function deletedata($id) {
 function updatecliente() {
     if (confirm("¿Confirma que desea editar el propietario?")) {
             $.ajax({
-                url: '<?php echo DIR;?>clientes/update_cliente.php', // url where to submit the request
+                url: '<?php echo DIR;?>clientes/update_cliente', // url where to submit the request
                 type : "POST", // type of action POST || GET
                 dataType : 'json', // data type
                 data : $("#client-form").serialize(), // post data || get data

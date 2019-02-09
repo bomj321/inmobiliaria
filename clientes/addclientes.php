@@ -38,6 +38,12 @@ if (isset($_GET['tipocliente']) AND !empty($_GET['tipocliente'])) {
 
 <!--INOUT ESCONDIDO-->
 
+<div class="row">
+	
+	<div class="col-md-6 col-sm-6 col-xs-12">
+
+
+
 			<div class="form-group">
 				    <label for="clientType">Tipo de Cliente</label>
 				    <select class="form-control" id="clientType" required="true" name="clientType">
@@ -126,10 +132,7 @@ if (isset($_GET['tipocliente']) AND !empty($_GET['tipocliente'])) {
 			    <input type="date" class="form-control" id="nacimiento" placeholder="Fecha de Nacimiento" name="nacimiento">
  		   </div>
 
-
-
-
- 		    <div class="form-group">
+ 		     <div class="form-group">
 			    <label for="clientSessionID">ID de la Sesi&oacute;n del Cliente</label>
 			    <input type="text" class="form-control" id="clientSessionID" placeholder="Ingrese ID de la Sesión" name="clientSessionID">
  		   </div>
@@ -149,10 +152,14 @@ if (isset($_GET['tipocliente']) AND !empty($_GET['tipocliente'])) {
 			    <input type="text" class="form-control" id="clientMob" placeholder="Ingrese un numero de movil" name="clientMob">
  		   </div>
 
- 		    <div class="form-group">
+ 		     <div class="form-group">
 			    <label for="clientFax">Fax de Cliente</label>
 			    <input type="text" class="form-control" id="clientFax" placeholder="Ingrese un numero de Fax" name="clientFax">
  		   </div>
+
+</div>
+
+<div class="col-md-6 col-sm-6 col-xs-12">	
 
  		   <div class="form-group">
 			    <label for="clientAddress">Direcci&oacute;n del Cliente</label>
@@ -285,6 +292,8 @@ if (isset($_GET['tipocliente']) AND !empty($_GET['tipocliente'])) {
 			    <label for="clientNotes">Notas del Cliente</label>
 			    <textarea name="clientNotes" id="clientNotes" class="form-control" placeholder="Ingrese las notas del cliente"></textarea>
  		   </div>
+ 	</div>	   
+</div> 		   
 
  		   <button  onclick="saveData()" type="button" class="btn btn-primary">Registrar Cliente</button>
 
@@ -314,7 +323,7 @@ function saveData() {
         CKEDITOR.instances[instance].updateElement();
     }
 			$.ajax({
-                url: '<?php echo DIR;?>clientes/savecliente.php', // url where to submit the request
+                url: '<?php echo DIR;?>clientes/savecliente', // url where to submit the request
                 type : "POST", // type of action POST || GET
                 dataType : 'text', // data type
                 data : $("#addcliente").serialize(), // post data || get data

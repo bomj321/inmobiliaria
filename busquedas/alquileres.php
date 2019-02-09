@@ -1,7 +1,7 @@
 
-	<div class="row" style="margin-top: 0px; background-color: white;">
+	<div class="row"  style="margin-top: 50px; background-color: white;">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  style="margin-top: 10px;">
-			 <table id="example1" class="table table-hover bulk_action dt-responsive nowrap table-striped" cellspacing="0" width="100%">
+			 <table id="alquileres_busqueda" class="table table-hover bulk_action dt-responsive nowrap table-striped" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                 	<th>Imagen</th>

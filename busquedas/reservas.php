@@ -27,63 +27,11 @@ try {
 <!--CONEXION NUEVA-->
 
 
-	<div class="row" style="margin-top: 10px; background-color: white;">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  style="margin-top: 20px;">
-			<div class="row" style="margin-bottom: 10px;">
+	<div class="row"  style="margin-top: 50px; background-color: white;">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  style="margin-top: 20px;">		
 
-				<div class="col-lg-2 col-md-2 col-sm-4 col-xs-4" style="margin-right: -3.5rem;">
-			 			 <h5 style="font-weight: bold;">Fecha de Entrada:</h5>
-			 		</div>
-
-			 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			 			<div class="input-group">
-							  <span class="input-group-addon glyphicon glyphicon-calendar"></span>
-							  <input name="min" id="min" class='form-control datepicker' type="text" aria-describedby="min" data-date-format="dd/mm/yyyy">
-						</div>
-			 		</div>
-
-			 		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-			 			<center><h2>-</h2></center>
-			 		</div>
-
-			 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			 			<div class="input-group">
-							  <span class="input-group-addon glyphicon glyphicon-calendar"></span>
-							  <input name="max" id="max" class='form-control datepicker' type="text" aria-describedby="max" data-date-format="dd/mm/yyyy">
-						</div>
-			 		</div>
-
-			 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-			 			<a href="<?php echo DIR;?>reservas/" type="button" class="btn btn-success">Refrescar Registros</a>
-			 		</div>
-
-			 	</div>
-
-			 	<div class="row" style="margin-bottom: 10px;">
-
-				<div class="col-lg-2 col-md-2 col-sm-4 col-xs-4" style="margin-right: -3.5rem;">
-			 			<h5 style="font-weight: bold;">Fecha de Reserva:</h5>
-			 		</div>
-
-			 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			 			<div class="input-group">
-							  <span class="input-group-addon glyphicon glyphicon-calendar"></span>
-							  <input name="min_res" id="min_res" class='form-control datepicker' type="text" aria-describedby="min_res" data-date-format="dd/mm/yyyy">
-						</div>
-			 		</div>
-
-			 		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-			 			<center><h2>-</h2></center>
-			 		</div>
-
-			 		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-			 			<div class="input-group">
-							  <span class="input-group-addon glyphicon glyphicon-calendar"></span>
-							  <input name="max_res" id="max_res" class='form-control datepicker' type="text" aria-describedby="max_res" data-date-format="dd/mm/yyyy">
-						</div>
-			 		</div>
-			 	</div>
-			 <table id="reservas" class="table table-hover bulk_action dt-responsive nowrap"  cellspacing="0" width="100%" style="max-width: 100%;">
+			 	
+			 <table id="reservas_busqueda" class="table table-hover bulk_action dt-responsive nowrap"  cellspacing="0" width="100%" style="max-width: 100%;">
 
                             <thead>
                                 <tr>
@@ -347,8 +295,7 @@ while ($row = $stmt->fetch()){
 										<td>
 											<div class="uk-grid uk-grid-small">
 												<!--<a style='color: black;' onclick="previewModal('<?php// echo $row['ID']?>')" ><span uk-icon="icon:info;ratio:1" uk-tooltip="Previsualizar"></span></a>-->
-												<a style='color: black;' href="<?php echo DIR;?>reservas/editarreserva?idreserva=<?php echo $row['ID']?>"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>
-												<a style='color: black;' onclick="deletedata(<?php echo $row['ID']?>)"><span uk-icon="icon:trash;ratio:1" uk-tooltip="Eliminar"></span></a>
+												<a style='color: black;' onclick="modalEditarReservas(<?php echo $row['ID']?>)"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>												
 										</div>
 										</td>
 

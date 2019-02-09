@@ -2,7 +2,7 @@
 	color: black;
 }
 
-		#reservas td {
+		#reservas td, #propietarios td {
     max-width: 200px;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -19,6 +19,9 @@
 <link rel="stylesheet" href="<?php echo DIR;?>js/jquery-ui/jquery-ui.structure.min.css" />
 <link rel="stylesheet" href="<?php echo DIR;?>js/jquery-ui/jquery-ui.theme.min.css" />
 <!--Jquery UI--> 
+<!--Toastr-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<!--Toastr-->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
