@@ -301,7 +301,7 @@ if (isset($_GET['tipocliente']) AND !empty($_GET['tipocliente'])) {
 
 		 		    <div class="form-group">
 					    <label for="clientNotes">Notas del Cliente</label>
-					    <textarea name="clientNotes" id="clientNotes" class="form-control" placeholder="Ingrese las notas del cliente"><?php echo $row['clientNotes']?></textarea>
+					    <textarea rows="8" name="clientNotes" id="clientNotes" class="form-control" placeholder="Ingrese las notas del cliente"><?php echo $row['clientNotes']?></textarea>
 		 		   </div>
 		 	</div>	   
 </div>

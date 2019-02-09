@@ -154,11 +154,11 @@ if ($precio!="0") {
 											<center>
 												<?php if ($row['active']=='1'): ?>
 
-														<a onclick="estado('<?php echo $row['ID']?>','<?php echo $row['active']?>')"><span uk-icon="icon:check;ratio: 1" class="green"></a></span>
+														<a><span uk-icon="icon:check;ratio: 1" class="green"></a></span>
 
 													<?php else: ?>
 
-														<a onclick="estado('<?php echo $row['ID']?>','<?php echo $row['active']?>')"><span uk-icon="icon:close;ratio: 1" class="red"></a></span>
+														<a><span uk-icon="icon:close;ratio: 1" class="red"></a></span>
 
 												<?php endif ?>
 											</center>
@@ -175,20 +175,17 @@ if ($precio!="0") {
 											<a style='color: black;' href="" ><?php echo ucfirst($tipo_de_casa);?></a>
 
 										</td>
-										<td><a style='color: black;' onclick="datoscliente(<?php echo $row['SellerID']?>)" data-toggle="modal" data-target="#cliente_modal" ><?php echo $row['nombrevendedor']?></a></td>
-										<td><a style='color: black;'  href="" ><?php echo $location?></a></td>
+										<td><a style='color: black;' onclick="modalEditarProp(<?php echo $row['sellerID']?>)" ><?php echo $row['nombrevendedor']?></a></td>
+										<td><a style='color: black;' ><?php echo $location?></a></td>
 										<td><?php echo $precio?></td>
 										<td>
 											<div class="uk-grid uk-grid-small">
 													<a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" ><span uk-icon="icon:info;ratio:1" uk-tooltip="Previsualizar"></span></a>
-
-													<a style='color: black;' href="<?php echo DIR;?>propiedades/editar?yourRef=<?php echo trim($row['yourRef'])?>"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>
-
+													
 													<a style='color: black;' onclick="previewGallery('<?php echo $row['ID']?>','<?php echo "activadas".$i ?>')"><span uk-icon="icon:image;ratio:1" uk-tooltip="Galería"></span></a>
 
 													<a style='color: black;' href="http://www.villasplanet.com/es/venta-<?php echo $title2?>-ref-<?php echo $row['yourRef']?>" target="new" ><span uk-icon="icon:link;ratio:1" uk-tooltip="Ficha web"></span></a>
-
-													<a style='color: black;' onclick="deletedata(<?php echo $row['ID']?>)"><span uk-icon="icon:trash;ratio:1" uk-tooltip="Eliminar"></span></a>
+													
 											</div>
 										</td>
 </tr>

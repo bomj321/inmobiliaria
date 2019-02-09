@@ -7,6 +7,14 @@ $tipoProp2      =$_POST['tipoProp2'];
 $estado1        =$_POST['estado1'];
 $propietario    =$_POST['propietario'];
 
+
+mysqli_set_charset($connection, "utf8");
+$sql = "SELECT sellerName1 FROM owners WHERE ID='$propietario'";
+$resultado= mysqli_query($connection, $sql); 
+$fila=mysqli_fetch_array($resultado);
+
+$name_owner = $fila['sellerName1'];
+
 /*PARTE DEL MAPA*/
 $direccion              =$_POST['direccion'];
 $poblacion              =$_POST['poblacion'];
@@ -163,7 +171,7 @@ $notas                =$_POST['notas'];
 
 /*SECCION DE NOTAS PRIVADAS*/
 
-/*INSERTAR 30 DATOS*/
+/*INSERTAR 32 DATOS*/
 
 if ($tipoProp=='venta') {
 $sql22 = "SELECT yourRef FROM properties ORDER BY ID DESC LIMIT 1";
@@ -175,13 +183,14 @@ if (mysqli_num_rows($result) > 0) {
 		$ref_ok = intval(preg_replace('/[^0-9]+/', '', $row3['yourRef']), 10) +1; 
 	   //$ref_ok=$row3['ID']+1001;
        $refVenta=trim($ref_ok."V");	
+       $idCasa = trim($ref_ok);
 	}}
     //////////////////////INSERT USUARIO
             mysqli_set_charset($connection, "utf8");
             $active= 1;
-            $sql_propiedad="INSERT INTO properties (yourRef,SellerID,active,propLocation,propStatus,propFeatured,propNameES,propNameEN,propNameDE,propAddress,propLinkMap,mostrarDireccion,propType,propPrice,propDescripES,propDescripEN,propDescripDE,propHouseM2,propTerraceM2,propLandM2,propTotalM2,propBedSingle,propBedDouble,propBathroom,propToilet,esLujo,esNueva,clasifEnergia,slider,propNotesPrivate) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql_propiedad="INSERT INTO properties (ID,yourRef,SellerID,NameOwner,active,propLocation,propStatus,propFeatured,propNameES,propNameEN,propNameDE,propAddress,propLinkMap,mostrarDireccion,propType,propPrice,propDescripES,propDescripEN,propDescripDE,propHouseM2,propTerraceM2,propLandM2,propTotalM2,propBedSingle,propBedDouble,propBathroom,propToilet,esLujo,esNueva,clasifEnergia,slider,propNotesPrivate) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $result_propiedad=mysqli_prepare($connection, $sql_propiedad);
-            mysqli_stmt_bind_param($result_propiedad, "ssssssssssssssssssssssssssssss",$refVenta,$propietario,$active,$location,$estado1,$destacada,$tituloES,$tituloEN,$tituloDE,$direccion,$linkmap,$mostrarDireccion,$tipoProp2,$precioVenta,$descripES,$descripEN,$descripDE,$supUtil,$supTerraza,$supTerreno,$supTotal,$habSimple,$habDoble,$banos_extra,$aseos,$lujo,$nueva,$clasifEnergia,$portada,$notas);
+            mysqli_stmt_bind_param($result_propiedad, "ssssssssssssssssssssssssssssssss",$idCasa,$refVenta,$propietario,$name_owner,$active,$location,$estado1,$destacada,$tituloES,$tituloEN,$tituloDE,$direccion,$linkmap,$mostrarDireccion,$tipoProp2,$precioVenta,$descripES,$descripEN,$descripDE,$supUtil,$supTerraza,$supTerreno,$supTotal,$habSimple,$habDoble,$banos_extra,$aseos,$lujo,$nueva,$clasifEnergia,$portada,$notas);
             mysqli_stmt_execute($result_propiedad);
             $idventa = mysqli_insert_id($connection);//CODIGO PARA EL ID
             mysqli_stmt_close($result_propiedad);
@@ -336,16 +345,17 @@ if (mysqli_num_rows($result) > 0) {
     while($row3 = mysqli_fetch_assoc($result)) {		
 		$ref_ok = intval(preg_replace('/[^0-9]+/', '', $row3['yourRef']), 10) +1; 
 	   //$ref_ok=$row3['ID']+1001;
-       $refVenta=trim($ref_ok."A");		
+       $refVenta=trim($ref_ok."A");
+       $idCasa = trim($ref_ok);		
 		//$ref_ok=$row3['ID']+1001;
 		// $refVenta=$ref_ok."A";	
 	}}	
     //////////////////////INSERT USUARIO
             mysqli_set_charset($connection, "utf8");
             $active= 1;
-            $sql_propiedad="INSERT INTO rentals (yourRef,SellerID,active,propLocation,propStatus,propFeatured,propNameES,propNameEN,propNameDE,propAddress,propLinkMap,mostrarDireccion,propType,propPrice,propDescripES,propDescripEN,propDescripDE,propHouseM2,propTerraceM2,propLandM2,propTotalM2,propBedSingle,propBedDouble,propBathroom,propToilet,esLujo,esNueva,slider,propNotesPrivate,rentalType,propSleepsFrom,propSleepsTo,propETV,propETVnum,avantio) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql_propiedad="INSERT INTO rentals (ID,yourRef,SellerID,NameOwner,active,propLocation,propStatus,propFeatured,propNameES,propNameEN,propNameDE,propAddress,propLinkMap,mostrarDireccion,propType,propPrice,propDescripES,propDescripEN,propDescripDE,propHouseM2,propTerraceM2,propLandM2,propTotalM2,propBedSingle,propBedDouble,propBathroom,propToilet,esLujo,esNueva,slider,propNotesPrivate,rentalType,propSleepsFrom,propSleepsTo,propETV,propETVnum,avantio) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $result_propiedad=mysqli_prepare($connection, $sql_propiedad);
-            mysqli_stmt_bind_param($result_propiedad, "sssssssssssssssssssssssssssssssssss",$refVenta,$propietario,$active,$location,$estado1,$destacada,$tituloES,$tituloEN,$tituloDE,$direccion,$linkmap,$mostrarDireccion,$tipoProp2,$precioVenta,$descripES,$descripEN,$descripDE,$supUtil,$supTerraza,$supTerreno,$supTotal,$habSimple,$habDoble,$banos_extra,$aseos,$lujo,$nueva,$portada,$notas,$rentalType,$propSleepsFrom,$propSleepsTo,$propETV,$propETVnum,$avantio);
+            mysqli_stmt_bind_param($result_propiedad, "sssssssssssssssssssssssssssssssssssss",$idCasa,$refVenta,$propietario,$name_owner,$active,$location,$estado1,$destacada,$tituloES,$tituloEN,$tituloDE,$direccion,$linkmap,$mostrarDireccion,$tipoProp2,$precioVenta,$descripES,$descripEN,$descripDE,$supUtil,$supTerraza,$supTerreno,$supTotal,$habSimple,$habDoble,$banos_extra,$aseos,$lujo,$nueva,$portada,$notas,$rentalType,$propSleepsFrom,$propSleepsTo,$propETV,$propETVnum,$avantio);
             mysqli_stmt_execute($result_propiedad);
              $idventa = mysqli_insert_id($connection);//CODIGO PARA EL ID
             mysqli_stmt_close($result_propiedad);

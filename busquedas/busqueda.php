@@ -86,18 +86,27 @@ $busqueda = $_POST['busqueda'];
 
 
 
+<div id="periodosReservas" class="uk-modal-container">
+<div id="calendarioReservas" class="uk-modal-container">
+  <div id="preview-modal"></div>
 
+<?php
+ require_once('modal_editar.php'); 
 
-<?php require_once('modal_editar.php') ?>
+ ?>
 <!--Footer-->
 
 <?php
 //include header template
 require('../layout/footer.php');
+include ("../layout/galeria-listados.php");
+
 ?>
 <!--Footer-->
 
 	<script>
+$( document ).ready(function() {
+    
 
  $("#reservas_busqueda").DataTable({
                   "iDisplayLength": 25,
@@ -159,6 +168,7 @@ require('../layout/footer.php');
               "aaSorting": [[ 0, "desc" ]],
           });
 
+$("#ventas_busqueda").dataTable().fnDestroy();
 
  $("#ventas_busqueda").DataTable({
                   "iDisplayLength": 25,
@@ -251,7 +261,7 @@ require('../layout/footer.php');
                "aaSorting": [[ 0, "desc" ]],
           });
 
-
+});
 /*RESPUESTA A LOS MODALES*/
 function modalEditar($id){
 
@@ -322,6 +332,8 @@ function modalEditarProp($id){
 
 }
 
+
+
 function modalEditarReservas($id){
 
   var cliente = {
@@ -354,6 +366,7 @@ function modalEditarReservas($id){
       });
 
 }
+
 
 /*RESPUESTA A LOS MODALES*/
 
@@ -521,6 +534,161 @@ var pendiente_input = $('#bookingOutstanding').val();
 <!---------------------------------------JAVASCRIPT DEL MODAL DE RESERVAS--------------------------------------------->
 
 
+
+
+
+<!--JAVASCRIPT DE LA SECCION DE VENtas-->
+<script>
+    function previewModal(param,divid) {
+                 $.ajax({
+            type: "POST",
+            url: "<?php echo DIR;?>propiedades/preview",
+            data:{ ref: param, divid: divid },
+                     beforeSend: function(){
+           $(".loader").show();
+          },
+            success: function(data){
+                $(".loader").fadeOut("slow");
+                $("#preview-modal").html(data);
+
+
+            }
+            });
+        }
+
+
+
+function previewGallery(param,divid) {
+         $.ajax({
+    type: "POST",
+    url: "<?php echo DIR;?>propiedades/previewgallery",
+    data:{ refid: param, divid: divid },
+             beforeSend: function(){
+   $(".loader").show();
+  },
+    success: function(data){
+        $(".loader").fadeOut("slow");
+        UIkit.modal("#previewgallery").show();
+        $("#previewgallery").html(data);
+        $("select.select-gallery")[0].sumo.reload();
+
+    }
+    });
+        }
+
+
+
+    $(document).ready(function () {
+          $('.search-box').SumoSelect({search: true, searchText: 'Escribir aquí...',selectAll:true,noMatch: 'No hay resultados para "{0}"',captionFormat:'{0} Seleccionados',
+    captionFormatAllSelected:'{0} todos seleccionados',locale: ['OK', 'Cancelar', 'Seleccionar todo']});
+            $('.select-gallery').SumoSelect({search: true, searchText: 'Escribir aquí...',selectAll:false,noMatch: 'No hay resultados para "{0}"',captionFormat:'{0} Seleccionados',
+    captionFormatAllSelected:'{0} todos seleccionados',locale: ['OK', 'Cancelar', 'Seleccionar todo']});
+            $('.simple').SumoSelect();
+        });
+    $(document).ready(function() {
+    var s = $(".filters");
+    var pos = s.position();
+    $(window).scroll(function() {
+        var windowpos = $(window).scrollTop();
+        if (windowpos >= pos.top & windowpos >170) {
+            s.addClass("stickbottom");
+            s.addClass("uk-animation-slide-bottom-small");
+            s.removelass("uk-animation-slide-top-small");
+        } else {
+            s.removeClass("stickbottom");
+            s.removeClass("uk-animation-slide-bottom-small");
+            s.addClass("uk-animation-slide-top-small");
+        }
+    });
+});
+
+
+ UIkit.upload('.js-upload');
+
+
+/*JAVASCRIPT PARA EL MODAL*/
+
+
+
+</script>
+
+
+<!--JAVASCRIPT DE LA SECCION DE VENtas-->
+
+
+
+
+<!--SECCION ALQUILERES-->
+<script>
+
+  function previewModalRentals(param) {
+         $.ajax({
+  type: "POST",
+  url: "<?php echo DIR;?>propiedades/preview_rentals",
+  data:'ref='+param,
+       beforeSend: function(){
+   $(".loader").show();
+  },
+  success: function(data){
+    $(".loader").fadeOut("slow");
+    $("#preview-modal").html(data);
+
+
+  }
+  });
+        }
+function previewGalleryRentals(param,divid) {
+         $.ajax({
+  type: "POST",
+  url: "<?php echo DIR;?>propiedades/previewgallery_rentals",
+  data:{ refid: param, divid: divid },
+       beforeSend: function(){
+   $(".loader").show();
+  },
+  success: function(data){
+    $(".loader").fadeOut("slow");
+    UIkit.modal("#previewgallery").show();
+    $("#previewgallery").html(data);
+    $("select.select-gallery")[0].sumo.reload();
+
+  }
+  });
+        }
+
+
+  function verperiodos($id) {
+  var id = $id;
+
+  $.ajax({
+        url: '<?php echo DIR;?>propiedades/senciyaPeriodos?idrental=' + id, // url where to submit the request
+        beforeSend: function(){
+        $(".loader").show();
+    },
+        success : function(result) {
+          $(".loader").fadeOut("slow");
+      $("#periodosReservas").html(result);
+      UIkit.modal("#periodosReservas").show();
+        }
+    });
+}
+function vercalendario($id) {
+  var id = $id;
+
+  $.ajax({
+        url: '<?php echo DIR;?>propiedades/senciyaCalendar?idrental=' + id, // url where to submit the request
+        beforeSend: function(){
+        $(".loader").show();
+    },
+        success : function(result) {
+          $(".loader").fadeOut("slow");
+      $("#calendarioReservas").html(result);
+      UIkit.modal("#calendarioReservas").show();
+        }
+    });
+}
+</script>
+
+<!--SECCION ALQUILERES-->
 
 
 

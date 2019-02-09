@@ -18,6 +18,14 @@ $tipoProp2      =$_POST['tipoProp2'];
 $estado1        =$_POST['estado1'];
 $propietario    =$_POST['propietario'];
 
+mysqli_set_charset($connection, "utf8");
+$sql = "SELECT sellerName1 FROM owners WHERE ID='$propietario'";
+$resultado= mysqli_query($connection, $sql); 
+$fila=mysqli_fetch_array($resultado);
+
+$name_owner = $fila['sellerName1'];
+
+
 /*PARTE DEL MAPA*/
 $direccion              =$_POST['direccion'];
 $poblacion              =$_POST['poblacion'];
@@ -154,12 +162,12 @@ $unidad  =$_POST['unidad'];
 /*DISTANCIAS*/
 
 
-/*ACTUALIZACION 30 DATOS*/
+/*ACTUALIZACION 31 DATOS*/
 
 mysqli_set_charset($connection, "utf8");
-    $sql="UPDATE properties SET active=?,SellerID=?, propLocation= ?, propStatus= ?, propFeatured= ?, propNameES= ?, propNameEN= ?, propNameDE= ?,propAddress= ?, propLinkMap=?, mostrarDireccion=?,propType=?,propPrice=?,propDescripES=?,propDescripEN=?,propDescripDE=?,propHouseM2=?,propTerraceM2=?,propLandM2=?,propTotalM2=?,propBedSingle=?,propBedDouble=?,propBathroom=?,propToilet=?,esLujo=?,esNueva=?,clasifEnergia=?,slider=?,propNotesPrivate=?  WHERE ID=?";
+    $sql="UPDATE properties SET active=?,SellerID=?,NameOwner=?, propLocation= ?, propStatus= ?, propFeatured= ?, propNameES= ?, propNameEN= ?, propNameDE= ?,propAddress= ?, propLinkMap=?, mostrarDireccion=?,propType=?,propPrice=?,propDescripES=?,propDescripEN=?,propDescripDE=?,propHouseM2=?,propTerraceM2=?,propLandM2=?,propTotalM2=?,propBedSingle=?,propBedDouble=?,propBathroom=?,propToilet=?,esLujo=?,esNueva=?,clasifEnergia=?,slider=?,propNotesPrivate=?  WHERE ID=?";
     $resultado=mysqli_prepare($connection, $sql);
-    mysqli_stmt_bind_param($resultado, "ssssssssssssssssssssssssssssss",$active,$propietario,$location,$estado1,$destacada,$tituloES,$tituloEN,$tituloDE,$direccion,$linkmap,$mostrarDireccion,$tipoProp2,$precioVenta,$descripES,$descripEN,$descripDE,$supUtil,$supTerraza,$supTerreno,$supTotal,$habSimple,$habDoble,$banos_extra,$aseos,$lujo,$nueva,$clasifEnergia,$portada,$notas,$id_venta);
+    mysqli_stmt_bind_param($resultado, "sssssssssssssssssssssssssssssss",$active,$propietario,$name_owner,$location,$estado1,$destacada,$tituloES,$tituloEN,$tituloDE,$direccion,$linkmap,$mostrarDireccion,$tipoProp2,$precioVenta,$descripES,$descripEN,$descripDE,$supUtil,$supTerraza,$supTerreno,$supTotal,$habSimple,$habDoble,$banos_extra,$aseos,$lujo,$nueva,$clasifEnergia,$portada,$notas,$id_venta);
     mysqli_stmt_execute($resultado);       
     mysqli_stmt_close($resultado);
 

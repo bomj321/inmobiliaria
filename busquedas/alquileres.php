@@ -161,9 +161,9 @@ if ($precio!="0") {
 												<?php endif ?>
 											</center>
 										</td>
-										<td><a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" ><span style="font-weight:600"><?php echo $row['yourRef']?></span></a></td>
+										<td><a style='color: black;' onclick="previewModalRentals('<?php echo $row['ID']?>')" ><span style="font-weight:600"><?php echo $row['yourRef']?></span></a></td>
 										<td>Alquiler</td>
-										<td><a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" class="uk-text-truncate"><?php echo $row['propNameES']?></a></td>
+										<td><a style='color: black;' onclick="previewModalRentals('<?php echo $row['ID']?>')" class="uk-text-truncate"><?php echo $row['propNameES']?></a></td>
 										<td>
 											<?php
 												$tipo_de_casa=str_replace('_', ' ',$row['propType']);
@@ -175,12 +175,10 @@ if ($precio!="0") {
 										<td><a style='color: black;'  href="" ><?php echo $location?></a></td>
 										<td><?php echo $precio?></td>
 										<td>
-											<div class="uk-grid uk-grid-small">
-													<!--<a style='color: black;' onclick="previewModal('<?php //echo $row['yourRef']?>')" ><span uk-icon="icon:info;ratio:1" uk-tooltip="Previsualizar"></span></a>-->
-													<a style='color: black;' href="<?php echo DIR;?>propiedades/editar_rentals?yourRef=<?php echo trim($row['yourRef'])?>"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>
-													<a style='color: black;' onclick="previewGallery('<?php echo $row['ID']?>','<?php echo "short".$i ?>')"><span uk-icon="icon:image;ratio:1" uk-tooltip="Galería"></span></a>
+											<div class="uk-grid uk-grid-small">																									
+													<a style='color: black;' onclick="previewGalleryRentals('<?php echo $row['ID']?>','<?php echo "short".$i ?>')"><span uk-icon="icon:image;ratio:1" uk-tooltip="Galería"></span></a>
 													<a style='color: black;' href="http://www.villasplanet.com/es/venta-<?php echo $title2?>-ref-<?php echo $row['yourRef']?>" target="new" ><span uk-icon="icon:link;ratio:1" uk-tooltip="Ficha web"></span></a>
-													<a style='color: black;'  onclick="deletedata(<?php echo $row['ID']?>)"><span uk-icon="icon:trash;ratio:1" uk-tooltip="Eliminar"></span></a>
+													
 													<a style='color: black;'  onclick="vercalendario(<?php echo $row['ID']?>)"><span uk-icon="icon:calendar;ratio:1" uk-tooltip="Calendario"></span></a>
 													<a style='color: black;'  onclick="verperiodos(<?php echo $row['ID']?>)"><span uk-icon="icon:credit-card;ratio:1" uk-tooltip="Periodos"></span></a>
 											</div>
