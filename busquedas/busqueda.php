@@ -35,12 +35,12 @@ $busqueda = $_POST['busqueda'];
 
 
 <div class="container">
+  <div class="row" style="margin-bottom: 30px;">
+      <button class="btn btn-primary btn-lg"> Busqueda para: <?php echo $busqueda; ?></button>
+  </div>
 	<div class="row">
-     <?php require_once('clientes.php'); ?>
-     <?php require_once('propietarios.php'); ?>
-     <?php require_once('reservas.php'); ?>
-     <?php require_once('ventas.php'); ?>
-     <?php require_once('alquileres.php'); ?>
+    <?php require_once('orden.php'); ?>
+    
   </div>
 </div>
 
@@ -674,6 +674,9 @@ function vercalendario($id) {
     type: "GET",
     url : 'respuesta_ajax_clientes.php?p='+p+'&busqueda='+busqueda,
     async: true,
+     beforeSend : function(){
+        toastr.warning('Espere Cargando Información...');  
+    },
     success : function (datos){
       var dataJson = eval(datos);
         
@@ -741,6 +744,9 @@ function vercalendario($id) {
     type: "GET",
     url : 'respuesta_ajax_propietarios.php?p='+p+'&busqueda='+busqueda,
     async: true,
+     beforeSend : function(){
+        toastr.warning('Espere Cargando Información...');  
+    },
     success : function (datos){
       var dataJson = eval(datos);
         

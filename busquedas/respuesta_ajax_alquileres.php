@@ -1,6 +1,6 @@
 <?php
 $page = $_GET['p'];
-$start = ($page-1)*10;
+$start = ($page-1)*5;
 $busqueda = $_GET['busqueda'];
 require('../includes/config2.php'); 
 require_once('query_alquiler.php');

@@ -76,18 +76,49 @@ $stmt->execute();
 $num_rows = $stmt->rowCount();
 /*VENTAS*/
 
-if ($num_rows>$num_rows_reservas) {
+if ($num_rows>$num_rows_reservas && $num_rows>$num_rows_owners && $num_rows>$num_rows_cliente && $num_rows>$num_rows_alquiler) {
+	 require_once('ventas.php');
 	 require_once('clientes.php');
      require_once('propietarios.php');
-     require_once('reservas.php');
+     require_once('reservas.php');     
+     require_once('alquileres.php');
+
+}elseif($num_rows_reservas>$num_rows && $num_rows_reservas>$num_rows_owners && $num_rows_reservas>$num_rows_cliente && $num_rows_reservas>$num_rows_alquiler){
+	 require_once('reservas.php');
+	 require_once('propietarios.php');     
      require_once('ventas.php');
      require_once('alquileres.php');
-}else{
 	 require_once('clientes.php');
-     require_once('propietarios.php');
-     require_once('reservas.php');
+    
+}elseif($num_rows_owners>$num_rows && $num_rows_owners>$num_rows_reservas && $num_rows_owners>$num_rows_cliente && $num_rows_owners>$num_rows_alquiler){
+	 require_once('propietarios.php');
+	 require_once('reservas.php');	     
      require_once('ventas.php');
      require_once('alquileres.php');
-}
+	 require_once('clientes.php');
+
+}elseif($num_rows_cliente>$num_rows && $num_rows_cliente>$num_rows_reservas && $num_rows_cliente>$num_rows_owners && $num_rows_cliente>$num_rows_alquiler){
+	 require_once('clientes.php');
+	 require_once('propietarios.php');
+	 require_once('reservas.php');	     
+     require_once('ventas.php');
+     require_once('alquileres.php');
+
+}elseif($num_rows_alquiler>$num_rows && $num_rows_alquiler>$num_rows_reservas && $num_rows_alquiler>$num_rows_owners && $num_rows_alquiler>$num_rows_cliente){
+	 require_once('alquileres.php');
+	 require_once('clientes.php');
+	 require_once('propietarios.php');
+	 require_once('reservas.php');	     
+     require_once('ventas.php');    	 
+}elseif($num_rows_alquiler== 0 && $num_rows== 0 && $num_rows_reservas== 0 && $num_rows_owners== 0 && $num_rows_cliente== 0){
+		echo '<center><h2><strong>No hay Resultados</strong></h2></center>';
+	 
+ }else{
+ 	require_once('clientes.php');
+	 require_once('propietarios.php');
+	 require_once('reservas.php');	     
+     require_once('ventas.php');
+     require_once('alquileres.php');
+ }
 
  ?>
