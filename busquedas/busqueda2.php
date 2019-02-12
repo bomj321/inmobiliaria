@@ -30,12 +30,52 @@ $busqueda = $_POST['busqueda'];
 
 
 
-<div class="container">
-	<div class="row">
-     <?php require_once('clientes.php'); ?>
-     <?php require_once('propietarios.php'); ?>
-     <?php require_once('reservas.php'); ?>
-  </div>
+<div class="container-fluid">
+		<div>
+
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active"><a href="#clientes_tab" aria-controls="clientes_tab" role="tab" data-toggle="tab">Clientes</a></li>
+          <li role="presentation"><a href="#propietarios_tab" aria-controls="propietarios_tab" role="tab" data-toggle="tab">Propietarios</a></li>
+			    <li role="presentation"><a href="#reservas_tab" aria-controls="reservas_tab" role="tab" data-toggle="tab">Casas/Reservas</a></li>
+			    <li role="presentation"><a href="#ventas_tab" aria-controls="ventas_tab" role="tab" data-toggle="tab">Casas/Ventas</a></li>
+			    <li role="presentation"><a href="#alquileres_tab" aria-controls="alquileres_tab" role="tab" data-toggle="tab">Casas/Alquileres</a></li>
+			  </ul>
+
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+
+
+					    <div role="tabpanel" class="tab-pane active" id="clientes_tab">
+					    	<?php require_once('clientes.php'); ?>
+
+					    </div>
+
+              <div role="tabpanel" class="tab-pane" id="propietarios_tab">
+                <?php require_once('propietarios.php'); ?>
+
+              </div>
+
+					    <div role="tabpanel" class="tab-pane" id="reservas_tab">
+
+					    	<?php require_once('reservas.php'); ?>
+					    </div>
+
+
+					    <div role="tabpanel" class="tab-pane" id="ventas_tab">
+
+					    	<?php require_once('ventas.php'); ?>
+					    </div>
+
+
+					    <div role="tabpanel" class="tab-pane" id="alquileres_tab">
+					    	<?php require_once('alquileres.php'); ?>
+					    	
+					    </div>
+
+			  </div>
+
+		</div>
 </div>
 
 
@@ -223,9 +263,6 @@ $("#ventas_busqueda").dataTable().fnDestroy();
 
 });
 /*RESPUESTA A LOS MODALES*/
-
-
-
 function modalEditar($id){
 
 	var cliente = {
@@ -654,226 +691,7 @@ function vercalendario($id) {
 <!--SECCION ALQUILERES-->
 
 
-<!--JS PARA EL AJAX-->
-<script>
-  var load_clientes = function(p, num_total,busqueda){
-  
-  $("#clients_items").remove();
-  num = ((p - 1) * 5) + 1;
-  pag = p + 1;
-  num_ini = num;
-  busqueda = busqueda;
-  
-  $.ajax({
-    type: "GET",
-    url : 'respuesta_ajax_clientes.php?p='+p+'&busqueda='+busqueda,
-    async: true,
-    success : function (datos){
-      var dataJson = eval(datos);
-        
-        for(var i in dataJson){
-          var plantilla_tabla = `
-                    <div class="panel-group" id="item-${num}" role="tablist" aria-multiselectable="true" >
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading${num}">
-                              <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#item-${num}" href="#collapse${num}" aria-expanded="true" aria-controls="collapse${num}">
-                                  ${dataJson[i].cliente_nombre}
-                                </a>
-                              </h4>
-                            </div>
-                            <div id="collapse${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
-                              <div class="panel-body">
-
-                               <p><strong>ID del Cliente: </strong>${dataJson[i].cliente_id}</p>
-                               <p><strong>Tipo del Cliente: </strong>${dataJson[i].cliente_tipo}</p>                   
-                              <p><strong>Fecha de Creaci&oacute;n: </strong><a style='color: black;' onclick="previewModal('${dataJson[i].cliente_id}')" class="uk-text-truncate">${dataJson[i].cliente_fecha}</a></p>                    
-                               <p><strong>Email del Cliente: </strong>${dataJson[i].cliente_email}</p> 
-                               <p><strong>Telefono del Cliente: </strong>${dataJson[i].cliente_cellp}</p>
-                               <button class="btn btn-danger" id='boton_clientes_editar' onclick="modalEditar(${dataJson[i].cliente_id})">Editar Cliente</button>
 
 
 
-                              </div>
-                            </div>       
-                          </div>     
-                  </div>
-             `
-          
-          $("#clients_list").append(plantilla_tabla);          
-          num++;
-        }
-
-        if(num<=num_total){
-
-          var plantilla_boton = `
-            <div id="clients_items">
-               <button class="btn btn-warning pull-right boton_ver_mas btn-lg" onclick="load_clientes(${pag},${num_total},'${busqueda}')">Ver más</button>
-            </div>   
-          `
-          $("#clients_list").append(plantilla_boton);
-            
-        }
-      
-    }
-  });
-  return false; 
-};
-
-
-/************************PROPIETARIOS*************************************************/
-
- var load_owners = function(p, num_total,busqueda){
-  
-  $("#owners_items").remove();
-  num = ((p - 1) * 5) + 1;
-  pag = p + 1;
-  num_ini = num;
-  busqueda = busqueda;
-  
-  $.ajax({
-    type: "GET",
-    url : 'respuesta_ajax_propietarios.php?p='+p+'&busqueda='+busqueda,
-    async: true,
-    success : function (datos){
-      var dataJson = eval(datos);
-        
-        for(var i in dataJson){
-          var plantilla_tabla = `
-                    <div class="panel-group" id="owner-${num}" role="tablist" aria-multiselectable="true" >
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading${num}">
-                              <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#owner-${num}" href="#owner${num}" aria-expanded="true" aria-controls="collapse${num}">
-                                  ${dataJson[i].propietario_nombre}
-                                </a>
-                              </h4>
-                            </div>
-                            <div id="owner${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
-                              <div class="panel-body">
-
-                               <p><strong>ID del Cliente: </strong>${dataJson[i].propietario_id}</p>
-                               <p><strong>Tipo del Cliente: </strong>${dataJson[i].propietario_tipo}</p>                   
-                              <p><strong>Fecha de Creaci&oacute;n: </strong><a style='color: black;' onclick="previewModal('${dataJson[i].propietario_id}')" class="uk-text-truncate">${dataJson[i].propietario_fecha}</a></p>                    
-                               <p><strong>Email del Cliente: </strong>${dataJson[i].propietario_email}</p> 
-                               <p><strong>Telefono del Cliente: </strong>${dataJson[i].propietario_cellp}</p>
-                               <button class="btn btn-danger" id='boton_clientes_editar' onclick="modalEditar(${dataJson[i].propietario_id})">Editar Cliente</button>
-
-
-
-                              </div>
-                            </div>       
-                          </div>     
-                  </div>
-             `
-          
-          $("#owners_list").append(plantilla_tabla);          
-          num++;
-        }
-
-        if(num<=num_total){
-
-          var plantilla_boton = `
-            <div id="owners_items">
-               <button class="btn btn-primary pull-right boton_ver_mas btn-lg" onclick="load_owners(${pag},${num_total},'${busqueda}')">Ver más</button>
-            </div>   
-          `
-          $("#owners_list").append(plantilla_boton);
-            
-        }
-      
-    }
-  });
-  return false; 
-};
-
-
-/*************************************RESERVAS***************************************************************/
-
-var load_reservas = function(p, num_total,busqueda){
-  
-  $("#reservas_items").remove();
-  num = ((p - 1) * 5) + 1;
-  pag = p + 1;
-  num_ini = num;
-  busqueda = busqueda;
-  
-  $.ajax({
-    type: "GET",
-    url : 'respuesta_ajax_reservas.php?p='+p+'&busqueda='+busqueda,
-    async: true,
-    beforeSend : function(){
-        toastr.warning('Espere Cargando Información...');  
-    },
-    success : function (datos){
-      var dataJson = eval(datos);
-        
-        for(var i in dataJson){
-          var plantilla_tabla = `
-                     <div class="panel-group" id="reserva-${num}" role="tablist" aria-multiselectable="true" >
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading${num}">
-                              <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#reserva-${num}" href="#reserva${num}" aria-expanded="true" aria-controls="collapse${num}">
-                                  ${dataJson[i].reserva_name}
-                                </a>
-                              </h4>
-                            </div>
-                            <div id="reserva${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
-                              <div class="panel-body">
-                                   <p><strong>ID de la Reserva: </strong>${dataJson[i].reserva_id}</p>
-
-                                   <p><strong>Fecha de la Reserva: </strong>${dataJson[i].reserva_fecha}</p>
-                                   <p><strong>Cliente: </strong>${dataJson[i].reserva_cliente}</p>                   
-                                                  
-                                   <p><strong>Tipo Propiedad: </strong>${dataJson[i].reserva_tipo}</p> 
-                                   <p><strong>Fecha de Entrada: </strong>${dataJson[i].reserva_entrada}</p>
-                                   <p><strong>Tipo de Reserva: </strong>${dataJson[i].reserva_tipo_boton}</p>
-
-                                   <p><strong>Precio: </strong>${dataJson[i].reserva_precio}</p>
-                                   <p><strong>Owner: </strong>${dataJson[i].reserva_owner}</p>
-                                   <p><strong>Charges: </strong>${dataJson[i].reserva_chargues}</p>
-                                   <p><strong>Discount: </strong>${dataJson[i].reserva_discount}</p>
-
-                                   <p><strong>Direcci&oacute;n: </strong><?php echo $row['Address']?></p>
-                                   <p><strong>Adultos: </strong><?php echo $row['bookingAdults']?></p>
-                                   <p><strong>Ni&ntilde;os: </strong><?php echo $row['bookingChildren']?></p>
-                                   <p><strong>Edades: </strong><?php echo $row['bookingChildAges']?></p>
-                                   <p><strong>Comentarios: </strong><?php echo $row['bookingNotesPrivate']?></p>
-                                   <p><strong>Profit: </strong><?php echo $row['bookingNotesPrivate']?></p>
-
-
-                              </div>
-                            </div>       
-                          </div>     
-                  </div>
-             `
-          
-          $("#reservas_list").append(plantilla_tabla);          
-          num++;
-        }
-
-        if(num<=num_total){
-
-          var plantilla_boton = `
-            <div id="reservas_items">
-               <button class="btn btn-danger pull-right" onclick="load_reservas(${pag},${num_total},'${busqueda}')">Ver más</button>
-            </div>   
-          `
-          $("#reservas_list").append(plantilla_boton);
-            
-        }
-      
-    }
-  });
-  return false; 
-};
-
-
-
-
-
-
-</script>
-<!--JS PARA EL AJAX-->
 

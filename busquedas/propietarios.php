@@ -1,122 +1,58 @@
-<div class="row" style="margin-top: 50px; background-color: white;">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  style="margin-top: 30px;">
-			 <table id="propietarios_busqueda" class="table table-hover bulk_action dt-responsive nowrap table-striped" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                	<th>ID</th>
-                                    <th>Tipo</th>
-                                    <th>Fecha</th>
-                                    <th>Nombre</th>
-                                    <th>Email</th>
-                                    <th>Telefono</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                          <!--CONSULTAS SQL PARA EL CUERPO DE LA TABLA-->
-<?php
 
-/*PRIMERO SE OBTIENE LA CANTIDAD DE COLUMNAS*/
+<?php 
+require_once('query_propietario.php');
 
-$query = $db->prepare('show columns from owners');
-$query->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_owners = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID");
 
-$query->execute();
-$queryCondition = "";
-
-$i = 0;
-while ($row = $query->fetch()){
-$i++;     
-}
-
-/*PRIMERO SE OBTIENE LA CANTIDAD DE COLUMNAS*/
-
-/*DESPUES DE OBTIENDE LA QUERY A AGREGAR AL SELECT*/
-$query_2 = $db->prepare('show columns from owners');
-$query_2->setFetchMode(PDO::FETCH_ASSOC);
-
-$query_2->execute();
-$a = 0;
-while ($row = $query_2->fetch()){
-
-       $queryCondition .= $row['Field'] . " LIKE '%" . $busqueda . "%'";
-
-$a++;    
-
-/*SECCION PARA VERIFICAR SI ES EL ULTIMO REGISTRO Y AGREGAR EL OR*/
+$stmt_owners->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_owners->execute();
+$num_rows_owners = $stmt_owners->rowCount();
 
 
-if($i!=$a){
-              $queryCondition .= " OR ";
-          }
+$stmt_owners_array = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID limit 0, 5");
 
-/*SECCION PARA VERIFICAR SI ES EL ULTIMO REGISTRO Y AGREGAR EL OR*/
+$stmt_owners_array->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_owners_array->execute();
+$i = 1;
+ ?> 
 
-}
+<?php if ($num_rows_owners > 0): ?>
+   
+    <strong><h1>Propietarios</h1></strong>
 
-/*DESPUES DE OBTIENDE LA QUERY A AGREGAR AL SELECT*/
+      <div id="owners_list">
 
+            <?php while ($row = $stmt_owners_array->fetch()){// WHILE 1 ?>
 
+                <div class="panel-group" id="owner-<?php echo $i ?>" role="tablist" aria-multiselectable="true" >
+                        <div class="panel panel-default">
+                          <div class="panel-heading" role="tab" id="heading<?php echo $i; ?>">
+                            <h4 class="panel-title">
+                              <a role="button" data-toggle="collapse" data-parent="#owner-<?php echo $i ?>" href="#owner<?php echo $i; ?>" aria-expanded="true" aria-controls="collapse<?php echo $i; ?>">
+                                <?php echo $row['sellerName1']?>
+                              </a>
+                            </h4>
+                          </div>
+                          <div id="owner<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $i; ?>">
+                            <div class="panel-body">
+                             <p><strong>ID del Propietario:</strong><?php echo $row['ID']?> </p>
+                             <p><strong>Tipo de Propietario:</strong><?php echo $row['propType']?> </p>                   
+                             <p><strong>Fecha de Creaci&oacute;n: </strong><a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" class="uk-text-truncate"><?php echo $row['dateAdded']?> </a></p>                    
+                            <p><strong>Email del Propietario: </strong><?php echo $row['sellerEmail']?></p> 
+                            <p><strong>Telefono del Propietario: </strong><?php echo $row['sellerTel']?></p>
+                            <button class="btn btn-danger" id='boton_propietarios_editar' onclick="modalEditarProp(<?php echo $row['ID']?>)">Editar Propietario</button>
+                            </div>
+                          </div>       
+                        </div>     
+                </div>
 
+                <?php $i++; } ?>
+          <?php if ($num_rows_owners > 5): ?>
+            <div id="owners_items">
+              <button class="btn btn-primary pull-right boton_ver_mas btn-lg" onclick="load_owners(2,<?php echo $num_rows_owners ?>,'<?php echo $busqueda ?>')">Ver más</button>
+          </div> 
+          <?php endif ?>
+              
+      </div>
 
-
-
-
-
-
-
-
-$stmt = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID");
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$stmt->execute();
-while ($row = $stmt->fetch()){// WHILE 1
- ?>
-<!--CONSULTAS SQL PARA EL CUERPO DE LA TABLA-->
-<!--CUERPO DE LA PAGINA-->
-<tr>
-						                <td>
-						                	<a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" ><?php echo $row['ID']?></a>
-						                </td>
-
-										<td>
-											<a style='color: black;' href="" class="green"><strong><?php echo $row['propType']?></strong></a>
-										</td>
-
-										<td>
-											<a style='color: black;' onclick="previewModal('<?php echo $row['ID']?>')" class="uk-text-truncate"><?php echo $row['dateAdded']?> / <?php echo $row['dateAdded']?></a>
-										</td>
-
-										<td onclick="datoscliente('<?php echo $row['ID']?>')" style="cursor:pointer;" data-toggle="modal" data-target="#cliente_modal">
-											<?php echo $row['sellerName1']?>
-
-										</td>
-
-										<td>
-											<a style='color: black;' href="" > <?php echo $row['sellerEmail']?> </a>
-										</td>
-
-										<td>
-											<?php echo $row['sellerTel']?>
-
-										</td>
-
-										<td>
-												<!--<a style='color: black;'  onclick="previewModal('<?php //echo $row['ID']?>')" ><span uk-icon="icon:info;ratio:1" uk-tooltip="Previsualizar"></span></a>-->
-
-												<a style='color: black;' id='boton_propietarios_editar' onclick="modalEditarProp(<?php echo $row['ID']?>)"><span uk-icon="icon:pencil;ratio:1" uk-tooltip="Editar"></span></a>												
-										</td>
-
-</tr>
-<!--CUERPO DE LA PAGINA-->
-<?php
-
-}// WHILE 1
-?>
-                            </tbody>
-                        </table>
-		</div>
-	</div>
-
-
-<!--------------------------------->
-
+<?php endif ?> 
