@@ -5,7 +5,7 @@ $query = $db->prepare('show columns from clients');
 $query->setFetchMode(PDO::FETCH_ASSOC);
 
 $query->execute();
-$queryCondition = "";
+$queryCondition_cliente = "";
 
 $i = 0;
 while ($row = $query->fetch()){
@@ -22,7 +22,7 @@ $query_2->execute();
 $a = 0;
 while ($row = $query_2->fetch()){
 
-       $queryCondition .= $row['Field'] . " LIKE '%" . $busqueda . "%'";
+       $queryCondition_cliente .= $row['Field'] . " LIKE '%" . $busqueda . "%'";
 
 $a++;    
 
@@ -30,7 +30,7 @@ $a++;
 
 
 if($i!=$a){
-              $queryCondition .= " OR ";
+              $queryCondition_cliente .= " OR ";
           }
 
 /*SECCION PARA VERIFICAR SI ES EL ULTIMO REGISTRO Y AGREGAR EL OR*/

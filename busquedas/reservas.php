@@ -23,14 +23,14 @@ try {
 
 require_once('query_reserva.php');
 
-$db_reservas_row = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition . " ORDER BY rental_enquiries.ID DESC");
+$db_reservas_row = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition_reserva . " ORDER BY rental_enquiries.ID DESC");
 
 $db_reservas_row->setFetchMode(PDO::FETCH_ASSOC);
 $db_reservas_row->execute();
 $num_rows_reservas = $db_reservas_row->rowCount();
 
 
-$db_reservas_array = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition . " ORDER BY rental_enquiries.ID DESC limit 0, 5");
+$db_reservas_array = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition_reserva . " ORDER BY rental_enquiries.ID DESC limit 0, 5");
 
 $db_reservas_array->setFetchMode(PDO::FETCH_ASSOC);
 $db_reservas_array->execute();

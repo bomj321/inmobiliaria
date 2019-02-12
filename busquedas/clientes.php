@@ -2,14 +2,14 @@
 <?php 
 require_once('query_cliente.php');
 
-$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition . "");
+$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition_cliente . "");
 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 $num_rows = $stmt->rowCount();
 
 
-$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition . " ORDER BY ID limit 0, 5");
+$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition_cliente . " ORDER BY ID limit 0, 5");
 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();

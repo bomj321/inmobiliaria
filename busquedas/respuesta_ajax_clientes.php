@@ -7,7 +7,7 @@ require_once('query_cliente.php');
 
 /*DETERMINAR SI EXISTEN FILAS*/
 
-$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition . "");
+$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition_cliente . "");
 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
@@ -19,7 +19,7 @@ $arr = array();
     
 if($num_rows > 0){
 
-			$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition . " ORDER BY ID limit $start, 5");
+			$stmt = $db->prepare("SELECT ID ,clientType, dateAdded, clientName, clientEmail,clientTel1  FROM clients WHERE " . $queryCondition_cliente . " ORDER BY ID limit $start, 5");
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$stmt->execute();
 			while ($row = $stmt->fetch()){

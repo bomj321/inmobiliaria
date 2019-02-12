@@ -2,14 +2,14 @@
 <?php 
 require_once('query_propietario.php');
 
-$stmt_owners = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID");
+$stmt_owners = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition_propietario . " ORDER BY ID");
 
 $stmt_owners->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_owners->execute();
 $num_rows_owners = $stmt_owners->rowCount();
 
 
-$stmt_owners_array = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID limit 0, 5");
+$stmt_owners_array = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition_propietario . " ORDER BY ID limit 0, 5");
 
 $stmt_owners_array->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_owners_array->execute();

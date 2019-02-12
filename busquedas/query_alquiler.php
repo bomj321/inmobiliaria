@@ -5,7 +5,7 @@ $query = $db->prepare('show columns from rentals');
 $query->setFetchMode(PDO::FETCH_ASSOC);
 
 $query->execute();
-$queryCondition = "";
+$queryCondition_alquiler = "";
 
 $i = 0;
 while ($row = $query->fetch()){
@@ -22,7 +22,7 @@ $query_2->execute();
 $a = 0;
 while ($row = $query_2->fetch()){
 
-       $queryCondition .= ' rentals.'. $row['Field'] . " LIKE '%" . $busqueda . "%'";
+       $queryCondition_alquiler .= ' rentals.'. $row['Field'] . " LIKE '%" . $busqueda . "%'";
 
 $a++;    
 
@@ -30,7 +30,7 @@ $a++;
 
 
 if($i!=$a){
-              $queryCondition .= " OR ";
+              $queryCondition_alquiler .= " OR ";
           }
 
 /*SECCION PARA VERIFICAR SI ES EL ULTIMO REGISTRO Y AGREGAR EL OR*/

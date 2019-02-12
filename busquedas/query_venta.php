@@ -5,7 +5,7 @@ $query = $db->prepare('show columns from properties');
 $query->setFetchMode(PDO::FETCH_ASSOC);
 
 $query->execute();
-$queryCondition = "";
+$queryCondition_venta = "";
 
 $i = 0;
 while ($row = $query->fetch()){
@@ -22,7 +22,7 @@ $query_2->execute();
 $a = 0;
 while ($row = $query_2->fetch()){
 
-       $queryCondition .= ' properties.'. $row['Field'] . " LIKE '%" . $busqueda . "%'";
+       $queryCondition_venta .= ' properties.'. $row['Field'] . " LIKE '%" . $busqueda . "%'";
 
 $a++;    
 
@@ -30,7 +30,7 @@ $a++;
 
 
 if($i!=$a){
-              $queryCondition .= " OR ";
+              $queryCondition_venta .= " OR ";
           }
 
 /*SECCION PARA VERIFICAR SI ES EL ULTIMO REGISTRO Y AGREGAR EL OR*/

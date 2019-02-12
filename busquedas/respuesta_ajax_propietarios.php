@@ -7,7 +7,7 @@ require_once('query_propietario.php');
 
 /*DETERMINAR SI EXISTEN FILAS*/
 
-$stmt = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . "");
+$stmt = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition_propietario . "");
 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
@@ -19,7 +19,7 @@ $arr = array();
     
 if($num_rows > 0){
 
-			$stmt = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition . " ORDER BY ID limit $start, 5");
+			$stmt = $db->prepare("SELECT ID ,propType, dateAdded, sellerName1, sellerEmail,sellerTel  FROM owners WHERE " . $queryCondition_propietario . " ORDER BY ID limit $start, 5");
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$stmt->execute();
 			while ($row = $stmt->fetch()){

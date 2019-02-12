@@ -29,7 +29,7 @@ require_once('query_reserva.php');
 
 /*DETERMINAR SI EXISTEN FILAS*/
 
-$stmt = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition . "");
+$stmt = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition_reserva . "");
 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
@@ -41,7 +41,7 @@ $arr = array();
     
 if($num_rows > 0){
 
-			$stmt = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition . " ORDER BY ID limit $start, 5");
+			$stmt = $db_reservas->prepare("SELECT rental_enquiries.*,rentals.propNameES as NameES,rentals.propType as Type,rentals.propAddress as Address,clients.ClientName as nombrecliente FROM rental_enquiries LEFT JOIN rentals ON rental_enquiries.PropID = rentals.ID LEFT JOIN clients ON rental_enquiries.ClientID = clients.ID WHERE " . $queryCondition_reserva . " ORDER BY ID limit $start, 5");
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$stmt->execute();
 			require_once('condicional_query_reserva.php');
