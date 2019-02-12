@@ -72,3 +72,43 @@ if ($row['bookingNotes'] == 'Pre-Reserva') {
 
 <!------------------------CONSULTA PARA EL BOTON---------------------->
 
+
+
+<!--CONSULTA PARA LOS PRECIOS-->
+<?php 
+	  /*if (empty($row['bookingComm'])) {
+                                                        $row['bookingComm'] = 0 ;
+                                                    }*/
+
+                                                    if (empty($row['bookingOwnerFee']) || !is_numeric($row['bookingOwnerFee'])) {
+                                                        $OwnerFee = 0 ;
+                                                    }else{
+                                                         $OwnerFee = $row['bookingOwnerFee'];
+
+                                                    }
+
+                                                    if (empty($row['bookingCharges']) || !is_numeric($row['bookingCharges'])) {
+                                                        $OwnerCharges = 0 ;
+                                                    }else{
+                                                        $OwnerCharges = $row['bookingCharges'] ;
+                                                    }
+                                                    if (empty($row['bookingFeeType']) || !is_numeric($row['bookingFeeType'])) {
+                                                        $OwnerType = 0 ;
+                                                    }else{
+                                                        $OwnerType = $row['bookingFeeType'] ;
+                                                    }
+
+                                                    /*if (empty($row['bookingDeposit'])) {
+                                                        $row['bookingDeposit'] = 0 ;
+                                                    }*/
+
+                                                    if (!empty($row['bookingComm']) AND $row['bookingComm'] != '0.00') {
+                                                        $total = $row['bookingComm'];
+
+                                                    }elseif(!empty($row['bookingDeposit']) AND $row['bookingDeposit'] != '0.00'){
+                                                        $total = $row['bookingDeposit'];
+                                                    }else{
+                                                        $total = 0;
+                                                    }
+ ?>
+<!--CONSULTA PARA LOS PRECIOS-->

@@ -35,6 +35,7 @@ $busqueda = $_POST['busqueda'];
      <?php require_once('clientes.php'); ?>
      <?php require_once('propietarios.php'); ?>
      <?php require_once('reservas.php'); ?>
+     <?php require_once('ventas.php'); ?>
   </div>
 </div>
 
@@ -835,13 +836,13 @@ var load_reservas = function(p, num_total,busqueda){
                                    <p><strong>Charges: </strong>${dataJson[i].reserva_chargues}</p>
                                    <p><strong>Discount: </strong>${dataJson[i].reserva_discount}</p>
 
-                                   <p><strong>Direcci&oacute;n: </strong><?php echo $row['Address']?></p>
-                                   <p><strong>Adultos: </strong><?php echo $row['bookingAdults']?></p>
-                                   <p><strong>Ni&ntilde;os: </strong><?php echo $row['bookingChildren']?></p>
-                                   <p><strong>Edades: </strong><?php echo $row['bookingChildAges']?></p>
-                                   <p><strong>Comentarios: </strong><?php echo $row['bookingNotesPrivate']?></p>
-                                   <p><strong>Profit: </strong><?php echo $row['bookingNotesPrivate']?></p>
-
+                                   <p><strong>Direcci&oacute;n: </strong>${dataJson[i].reserva_direccion}</p>
+                                   <p><strong>Adultos: </strong>${dataJson[i].reserva_adultos}</p>
+                                   <p><strong>Ni&ntilde;os: </strong>${dataJson[i].reserva_ninos}</p>
+                                   <p><strong>Edades: </strong>${dataJson[i].reserva_edad}</p>
+                                   <p><strong>Comentarios: </strong>${dataJson[i].reserva_notas}</p>
+                                   <p><strong>Profit: </strong>${dataJson[i].reserva_total}</p>
+                                  <button class="btn btn-warning" onclick="modalEditarReservas(${dataJson[i].reserva_id})">Editar Reserva</button>
 
                               </div>
                             </div>       
@@ -857,7 +858,7 @@ var load_reservas = function(p, num_total,busqueda){
 
           var plantilla_boton = `
             <div id="reservas_items">
-               <button class="btn btn-danger pull-right" onclick="load_reservas(${pag},${num_total},'${busqueda}')">Ver más</button>
+               <button class="btn btn-danger pull-right btn-lg" onclick="load_reservas(${pag},${num_total},'${busqueda}')">Ver más</button>
             </div>   
           `
           $("#reservas_list").append(plantilla_boton);
@@ -869,6 +870,86 @@ var load_reservas = function(p, num_total,busqueda){
   return false; 
 };
 
+/********************************************************VENTAS*************************************************************/
+
+var load_ventas = function(p, num_total,busqueda){
+  
+  $("#ventas_items").remove();
+  num = ((p - 1) * 5) + 1;
+  pag = p + 1;
+  num_ini = num;
+  busqueda = busqueda;
+  
+  $.ajax({
+    type: "GET",
+    url : 'respuesta_ajax_reservas.php?p='+p+'&busqueda='+busqueda,
+    async: true,
+    beforeSend : function(){
+        toastr.warning('Espere Cargando Información...');  
+    },
+    success : function (datos){
+      var dataJson = eval(datos);
+        
+        for(var i in dataJson){
+          var plantilla_tabla = `
+                     <div class="panel-group" id="reserva-${num}" role="tablist" aria-multiselectable="true" >
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading${num}">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#reserva-${num}" href="#reserva${num}" aria-expanded="true" aria-controls="collapse${num}">
+                                  ${dataJson[i].reserva_name}
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="reserva${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
+                              <div class="panel-body">
+                                   <p><strong>ID de la Reserva: </strong>${dataJson[i].reserva_id}</p>
+
+                                   <p><strong>Fecha de la Reserva: </strong>${dataJson[i].reserva_fecha}</p>
+                                   <p><strong>Cliente: </strong>${dataJson[i].reserva_cliente}</p>                   
+                                                  
+                                   <p><strong>Tipo Propiedad: </strong>${dataJson[i].reserva_tipo}</p> 
+                                   <p><strong>Fecha de Entrada: </strong>${dataJson[i].reserva_entrada}</p>
+                                   <p><strong>Tipo de Reserva: </strong>${dataJson[i].reserva_tipo_boton}</p>
+
+                                   <p><strong>Precio: </strong>${dataJson[i].reserva_precio}</p>
+                                   <p><strong>Owner: </strong>${dataJson[i].reserva_owner}</p>
+                                   <p><strong>Charges: </strong>${dataJson[i].reserva_chargues}</p>
+                                   <p><strong>Discount: </strong>${dataJson[i].reserva_discount}</p>
+
+                                   <p><strong>Direcci&oacute;n: </strong>${dataJson[i].reserva_direccion}</p>
+                                   <p><strong>Adultos: </strong>${dataJson[i].reserva_adultos}</p>
+                                   <p><strong>Ni&ntilde;os: </strong>${dataJson[i].reserva_ninos}</p>
+                                   <p><strong>Edades: </strong>${dataJson[i].reserva_edad}</p>
+                                   <p><strong>Comentarios: </strong>${dataJson[i].reserva_notas}</p>
+                                   <p><strong>Profit: </strong>${dataJson[i].reserva_total}</p>
+                                  <button class="btn btn-warning" onclick="modalEditarReservas(${dataJson[i].reserva_id})">Editar Reserva</button>
+
+                              </div>
+                            </div>       
+                          </div>     
+                  </div>
+             `
+          
+          $("#ventas_list").append(plantilla_tabla);          
+          num++;
+        }
+
+        if(num<=num_total){
+
+          var plantilla_boton = `
+            <div id="ventas_items">
+               <button class="btn btn-success pull-right btn-lg" onclick="load_ventas(${pag},${num_total},'${busqueda}')">Ver más</button>
+            </div>   
+          `
+          $("#ventas_list").append(plantilla_boton);
+            
+        }
+      
+    }
+  });
+  return false; 
+};
 
 
 

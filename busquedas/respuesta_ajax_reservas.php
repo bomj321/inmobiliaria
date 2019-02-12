@@ -46,6 +46,8 @@ if($num_rows > 0){
 			$stmt->execute();
 			require_once('condicional_query_reserva.php');
 			while ($row = $stmt->fetch()){
+					require_once('condicional_query_reserva.php');
+
 						$arr[] = array( 
 							"reserva_id"         =>  $row['ID'],
 							"reserva_name"       =>  $nombre_renta,		
@@ -67,7 +69,7 @@ if($num_rows > 0){
 							"reserva_ninos"      =>  $row['bookingChildren'],
 							"reserva_edad"       =>  $row['bookingChildAges'],
 							"reserva_notas"      =>  $row['bookingNotesPrivate'],
-							"reserva_total"      =>  $total - ($row['bookingOwnerFee'] + $row['bookingCharges']+$row['bookingFeeType']).' Euros',
+							"reserva_total"      =>  $total - ($OwnerFee +  $OwnerCharges+$OwnerType),
 					);
 
 			}
