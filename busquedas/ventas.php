@@ -66,28 +66,33 @@ $i = 1;
                           </div>
                           <div id="venta<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $i; ?>">
                             <div class="panel-body">
-
-                            <div uk-lightbox style="width:50px;height:50px; " id="activadas<?php echo $i?>">                                        
+                                                               
                                 <strong>Imagen:
                                 <?php if ($row['imagengrande']==""): ?>
-                                        <a style='color: black;' href="<?php echo DIR;?>images/nofoto.jpg" data-caption="<button onclick=previewGallery('<?php echo $row['ID']?>','<?php echo "venta".$i ?>') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
-                                           <div style="background:url(<?php echo DIR;?>images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
-
+                                      <div uk-lightbox style="width:50px;height:50px; " id="activadas<?php echo $i?>">   
+                                                <a style='color: black;' href="<?php echo DIR;?>images/nofoto.jpg" data-caption="<button onclick=previewGallery('<?php echo $row['ID']?>','<?php echo "venta".$i ?>') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                                   <div style="background:url(<?php echo DIR;?>images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                                        </div>
                                     <?php elseif($row['imagengrande']!=""): ?>
-
+                                        <div uk-lightbox style="width:50px;height:50px; " id="activadas<?php echo $i?>">
                                             <a style='color: black;' href="<?php echo $row['imagengrande']?>" data-caption="<button onclick=previewGallery('<?php echo $row['ID']?>','<?php echo "venta".$i ?>') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
                                                  <div style="background:url(<?php echo $row['imagengrande']?>) no-repeat 50% 50%;height:100%; border-radius:50px"></div>
+                                         </div>        
                                      <?php elseif($row['imagenpequena']==""): ?> 
-                                            <div style="background:url(<?php echo DIR;?>images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div>
+                                            <div uk-lightbox style="width:50px;height:50px; " id="activadas<?php echo $i?>"> 
+                                                 <div style="background:url(<?php echo DIR;?>images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div>
+                                         </div>   
                                      <?php elseif($row['imagenpequena']==!""): ?>  
-                                            <div style="background:url(<?php echo $row['imagenpequena']?>) no-repeat 50% 50%;height:100%; border-radius:50px"></div>         
+                                        <div uk-lightbox style="width:50px;height:50px; " id="activadas<?php echo $i?>"> 
+                                            <div style="background:url(<?php echo $row['imagenpequena']?>) no-repeat 50% 50%;height:100%; border-radius:50px"></div>
+                                        </div>             
 
                                 <?php endif ?>
 
                               </strong>
-                            </div>
+                            
 
-                             <p style="margin-top: 40px;"><strong>Id: </strong><?php echo $row['ID'] ?></p>
+                             <p style="margin-top: 40px;"><strong>ID: </strong><?php echo $row['ID'] ?></p>
                              <p><strong>Estado: </strong>
 
                                <?php if ($row['active']=='1'): ?>
@@ -115,9 +120,9 @@ $i = 1;
                             </p>
                             <p><strong>Poblaci&oacute;n: </strong><?php echo $location?></p>
                             <p><strong>Precio: </strong><?php echo $precio?></p>
-                            <button class="btn btn-danger" id='boton_clientes_editar' onclick="previewModal('<?php echo $row['ID']?>')">Previsualizar</button>
-                            <button class="btn btn-success" id='boton_clientes_editar' onclick="previewGallery('<?php echo $row['ID']?>','<?php echo "venta".$i ?>')">Galer&iacute;a</button>
-                            <button class="btn btn-primary" id='boton_clientes_editar' href="http://www.villasplanet.com/es/venta-<?php echo $title2?>-ref-<?php echo $row['yourRef']?>" target="new" >Ficha web</button>
+                            <button class="btn btn-danger" onclick="previewModal('<?php echo $row['ID']?>')">Previsualizar</button>
+                            <button class="btn btn-success" onclick="previewGallery('<?php echo $row['ID']?>','<?php echo "venta".$i ?>')">Galer&iacute;a</button>
+                            <button class="btn btn-primary" href="http://www.villasplanet.com/es/venta-<?php echo $title2?>-ref-<?php echo $row['yourRef']?>" target="new" >Ficha web</button>
                             </div>
                           </div>       
                         </div>     
@@ -126,7 +131,7 @@ $i = 1;
                 <?php $i++; } ?>
           <?php if ($num_rows > 5): ?>
             <div id="ventas_items">
-              <button class="btn btn-success pull-right boton_ver_mas btn-lg" onclick="load_ventas(2,<?php echo $num_rows ?>,'<?php echo $busqueda ?>')">Ver más</button>
+              <button class="btn btn-success pull-right boton_ver_mas btn-lg" onclick="load_ventas(2,<?php echo $num_rows ?>,'<?php echo $busqueda ?>','')">Ver más</button>
           </div> 
           <?php endif ?>
               

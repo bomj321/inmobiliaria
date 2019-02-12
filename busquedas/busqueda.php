@@ -26,8 +26,12 @@ $busqueda = $_POST['busqueda'];
 
 <!--HOJA DE ESTILO PERSONALIZADA-->
 
+<!--SCRIPT PARA DETECTAR QUIEN TIENE MAS REGISTROS-->
+    
 
 
+
+<!--SCRIPT PARA DETECTAR QUIEN TIENE MAS REGISTROS-->
 
 
 <div class="container">
@@ -36,6 +40,7 @@ $busqueda = $_POST['busqueda'];
      <?php require_once('propietarios.php'); ?>
      <?php require_once('reservas.php'); ?>
      <?php require_once('ventas.php'); ?>
+     <?php require_once('alquileres.php'); ?>
   </div>
 </div>
 
@@ -506,7 +511,7 @@ var pendiente_input = $('#bookingOutstanding').val();
     function previewModal(param,divid) {
                  $.ajax({
             type: "POST",
-            url: "<?php echo DIR;?>propiedades/preview",
+            url: "<?php echo DIR;?>propiedades/preview.php",
             data:{ ref: param, divid: divid },
                      beforeSend: function(){
            $(".loader").show();
@@ -525,7 +530,7 @@ var pendiente_input = $('#bookingOutstanding').val();
 function previewGallery(param,divid) {
          $.ajax({
     type: "POST",
-    url: "<?php echo DIR;?>propiedades/previewgallery",
+    url: "<?php echo DIR;?>propiedades/previewgallery.php",
     data:{ refid: param, divid: divid },
              beforeSend: function(){
    $(".loader").show();
@@ -879,10 +884,10 @@ var load_ventas = function(p, num_total,busqueda){
   pag = p + 1;
   num_ini = num;
   busqueda = busqueda;
-  
+  url = "<?php echo DIR; ?>";
   $.ajax({
     type: "GET",
-    url : 'respuesta_ajax_reservas.php?p='+p+'&busqueda='+busqueda,
+    url : 'respuesta_ajax_ventas.php?p='+p+'&busqueda='+busqueda,
     async: true,
     beforeSend : function(){
         toastr.warning('Espere Cargando Información...');  
@@ -891,39 +896,73 @@ var load_ventas = function(p, num_total,busqueda){
       var dataJson = eval(datos);
         
         for(var i in dataJson){
+
+            if (dataJson[i].venta_foto =='imagen_grande_vacia') {
+                var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGallery('${num}','venta${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${url}images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+            }else if(dataJson[i].venta_foto=="imagen_grande_no_vacia"){
+                  var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGallery('${num}','venta${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${dataJson[i].venta_img_grande}) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+            }else if(dataJson[i].venta_foto=='imagen_pequena_vacia'){
+                     var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGallery('${num}','venta${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${url}images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+
+
+
+            }else if(dataJson[i].venta_foto=='imagen_pequena_no_vacia'){
+                     var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGallery('${num}','venta${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${dataJson[i].venta_img_chica}) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+
+
+            }
+
+
           var plantilla_tabla = `
-                     <div class="panel-group" id="reserva-${num}" role="tablist" aria-multiselectable="true" >
+                     <div class="panel-group" id="venta-${num}" role="tablist" aria-multiselectable="true" >
                           <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="heading${num}">
                               <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#reserva-${num}" href="#reserva${num}" aria-expanded="true" aria-controls="collapse${num}">
-                                  ${dataJson[i].reserva_name}
+                                <a role="button" data-toggle="collapse" data-parent="#venta-${num}" href="#venta${num}" aria-expanded="true" aria-controls="collapse${num}">
+                                  ${dataJson[i].venta_name}
                                 </a>
                               </h4>
                             </div>
-                            <div id="reserva${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
+                            <div id="venta${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
                               <div class="panel-body">
-                                   <p><strong>ID de la Reserva: </strong>${dataJson[i].reserva_id}</p>
+                              </strong>
+                                   <strong>Imagen: </strong>${foto}
+                                   <p><strong>Estado: </strong>${dataJson[i].venta_active}</p>        
+                                   <p><strong>Referencia: </strong><a style='color: black;' onclick="previewModal('${dataJson[i].venta_id}')" ><span style="font-weight:600">${dataJson[i].venta_ref}</span></a></p> 
+                                   <p><strong>Tipo: </strong> ${dataJson[i].venta_casa_tipo}</p>      
+                                   <p><strong>Propietario / Cliente: </strong>
+                                     <a style='color: black;' onclick="modalEditarProp(${dataJson[i].venta_vendedor})" >${dataJson[i].venta_cliente}</a>
+                                  </p>     
+                                  <p><strong>Poblaci&oacute;n: </strong>${dataJson[i].venta_poblacion}</p>
+                                 <p><strong>Precio: </strong>${dataJson[i].venta_precio}</p>  
 
-                                   <p><strong>Fecha de la Reserva: </strong>${dataJson[i].reserva_fecha}</p>
-                                   <p><strong>Cliente: </strong>${dataJson[i].reserva_cliente}</p>                   
-                                                  
-                                   <p><strong>Tipo Propiedad: </strong>${dataJson[i].reserva_tipo}</p> 
-                                   <p><strong>Fecha de Entrada: </strong>${dataJson[i].reserva_entrada}</p>
-                                   <p><strong>Tipo de Reserva: </strong>${dataJson[i].reserva_tipo_boton}</p>
-
-                                   <p><strong>Precio: </strong>${dataJson[i].reserva_precio}</p>
-                                   <p><strong>Owner: </strong>${dataJson[i].reserva_owner}</p>
-                                   <p><strong>Charges: </strong>${dataJson[i].reserva_chargues}</p>
-                                   <p><strong>Discount: </strong>${dataJson[i].reserva_discount}</p>
-
-                                   <p><strong>Direcci&oacute;n: </strong>${dataJson[i].reserva_direccion}</p>
-                                   <p><strong>Adultos: </strong>${dataJson[i].reserva_adultos}</p>
-                                   <p><strong>Ni&ntilde;os: </strong>${dataJson[i].reserva_ninos}</p>
-                                   <p><strong>Edades: </strong>${dataJson[i].reserva_edad}</p>
-                                   <p><strong>Comentarios: </strong>${dataJson[i].reserva_notas}</p>
-                                   <p><strong>Profit: </strong>${dataJson[i].reserva_total}</p>
-                                  <button class="btn btn-warning" onclick="modalEditarReservas(${dataJson[i].reserva_id})">Editar Reserva</button>
+                                 <button class="btn btn-danger" onclick="previewModal('${dataJson[i].venta_id}')">Previsualizar</button>
+                                 <button class="btn btn-success" onclick="previewGallery('${dataJson[i].venta_id}','venta${num}')">Galer&iacute;a</button>
+                                 <button class="btn btn-primary" href="http://www.villasplanet.com/es/venta-${dataJson[i].title2}-ref-${dataJson[i].venta_ref}" target="new" >Ficha web</button>      
 
                               </div>
                             </div>       
@@ -951,8 +990,125 @@ var load_ventas = function(p, num_total,busqueda){
   return false; 
 };
 
+/***********************************ALQUILERES******************************************/
+
+var load_alquileres = function(p, num_total,busqueda){
+  
+  $("#alquileres_items").remove();
+  num = ((p - 1) * 5) + 1;
+  pag = p + 1;
+  num_ini = num;
+  busqueda = busqueda;
+  url = "<?php echo DIR; ?>";
+  $.ajax({
+    type: "GET",
+    url : 'respuesta_ajax_alquileres.php?p='+p+'&busqueda='+busqueda,
+    async: true,
+    beforeSend : function(){
+        toastr.warning('Espere Cargando Información...');  
+    },
+    success : function (datos){
+      var dataJson = eval(datos);
+        
+        for(var i in dataJson){
+
+            if (dataJson[i].venta_foto =='imagen_grande_vacia') {
+                var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGalleryRentals('${num}','alquiler${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${url}images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+            }else if(dataJson[i].venta_foto=="imagen_grande_no_vacia"){
+                  var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGalleryRentals('${num}','alquiler${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${dataJson[i].alquiler_img_grande}) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+            }else if(dataJson[i].venta_foto=='imagen_pequena_vacia'){
+                     var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGalleryRentals('${num}','alquiler${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${url}images/nofotosmall.jpg) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
 
 
+
+            }else if(dataJson[i].venta_foto=='imagen_pequena_no_vacia'){
+                     var foto = `
+                     <div uk-lightbox style="width:50px;height:50px; " id="activadas${num}">   
+                                        <a style='color: black;' href="${url}images/nofoto.jpg" data-caption="<button onclick=previewGalleryRentals('${num}','alquiler${num}') class='uk-button uk-button-primary uk-margin-bottom' style='padding:10px 20px;'><h3 style='margin-bottom:0px;'><span uk-icon='icon:image;ratio:1'></span> <strong>Editar galería</strong></h3></button>">
+                                           <div style="background:url(${dataJson[i].alquiler_img_chica}) no-repeat 50% 50%;height:100%; border-radius:50px"></div> 
+                    </div>
+
+                `
+
+
+            }
+
+
+          var plantilla_tabla = `
+                     <div class="panel-group" id="alquiler-${num}" role="tablist" aria-multiselectable="true" >
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading${num}">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#alquiler-${num}" href="#alquiler${num}" aria-expanded="true" aria-controls="collapse${num}">
+                                  ${dataJson[i].alquiler_name}
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="alquiler${num}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${num}">
+                              <div class="panel-body">
+                              </strong>
+                                   <strong>Imagen: </strong>${foto}
+                                    <p style="margin-top: 40px;"><strong>ID: </strong>${dataJson[i].alquiler_id}</p>
+                                   <p><strong>Estado: </strong>${dataJson[i].alquiler_active}</p>        
+                                   <p><strong>Referencia: </strong><a style='color: black;' onclick="previewModalRentals('${dataJson[i].alquiler_id}')" ><span style="font-weight:600">${dataJson[i].alquiler_ref}</span></a></p> 
+                                   <p><strong>Tipo: </strong> ${dataJson[i].alquiler_casa_tipo}</p>      
+                                   <p><strong>Propietario / Cliente: </strong>
+                                     <a style='color: black;' onclick="modalEditarProp(${dataJson[i].alquiler_vendedor})" >${dataJson[i].alquiler_cliente}</a>
+                                  </p>     
+                                  <p><strong>Poblaci&oacute;n: </strong>${dataJson[i].alquiler_poblacion}</p>
+                                 <p><strong>Precio: </strong>${dataJson[i].alquiler_precio}</p>  
+
+                                  <button class="btn btn-danger" onclick="previewModalRentals('${dataJson[i].alquiler_id}')">Previsualizar</button>
+                                 <button class="btn btn-success" onclick="previewGalleryRentals('${dataJson[i].alquiler_id}','alquiler${num}')">Galer&iacute;a</button>
+                                 <button class="btn btn-primary" href="http://www.villasplanet.com/es/venta-${dataJson[i].title2}-ref-${dataJson[i].alquiler_ref}" target="new" >Ficha web</button> 
+
+                                 <button class="btn btn-warning" onclick="vercalendario('${dataJson[i].alquiler_id}','alquiler${num}')">Calendario</button>
+
+                                 <button class="btn btn-default" onclick="verperiodos('${dataJson[i].alquiler_id}','alquiler${num}')">Periodos</button>   
+
+                              </div>
+                            </div>       
+                          </div>     
+                  </div>
+             `
+          
+          $("#alquileres_list").append(plantilla_tabla);          
+          num++;
+        }
+
+        if(num<=num_total){
+
+          var plantilla_boton = `
+            <div id="alquileres_items">
+               <button class="btn btn-default pull-right btn-lg" onclick="load_alquileres(${pag},${num_total},'${busqueda}')">Ver más</button>
+            </div>   
+          `
+          $("#alquileres_list").append(plantilla_boton);
+            
+        }
+      
+    }
+  });
+  return false; 
+};
 
 
 </script>
